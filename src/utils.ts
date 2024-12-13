@@ -21,7 +21,13 @@ export const createCsp = (yaml: string) => {
   const parsed: Record<string, string[] | Record<string, Array<string>>> =
     parse(yaml);
   const cspString = Object.entries(parsed.csp)
-    .filter(([directive, _rules]) => isValidDirective(directive))
+    .filter(([directive, _rules]) => {
+      const isValid = isValidDirective(directive)
+      if (!isValid) {
+        console.warn(`"${directive}" is not a valid CSP directive and has been ignored.`)
+      }
+      return isValid;
+    })
     .map(([directive, rules]) => `${directive} ${processRules(rules)}`);
   return `${cspString.join("; ")};`;
 };

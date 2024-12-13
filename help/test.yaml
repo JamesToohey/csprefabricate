@@ -6,5 +6,5 @@ csp:
     - "*.google":
       - .com
       - .com.au
-  ooger:
-    - nope
+  invalid-directive:
+    - will-be-filtered-out

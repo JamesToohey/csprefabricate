@@ -24,3 +24,4 @@ const { inputPath, outputPath } = cli.flags;
 const file = fs.readFileSync(inputPath, "utf8");
 const cspString = createCsp(file);
 fs.writeFileSync(outputPath, cspString);
+console.info(`CSP successfully generated: ${outputPath}`);
