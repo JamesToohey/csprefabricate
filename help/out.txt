@@ -1,0 +1,1 @@
+default-src 'self'; img-src 'self' *.google.com *.google.com.au;

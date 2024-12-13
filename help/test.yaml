@@ -1,0 +1,10 @@
+csp:
+  default-src:
+    - self
+  img-src:
+    - self
+    - "*.google":
+      - .com
+      - .com.au
+  ooger:
+    - nope
