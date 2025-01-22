@@ -2,7 +2,18 @@ import fs from "fs";
 import meow from "meow";
 import { createCsp } from "./utils";
 
-const cli = meow("CSPrefabricate", {
+const description = `
+  CSPrefabricate
+
+  Usage
+	  $ csp <input>
+
+  Required
+    --input-path, -i path to input yaml
+    --output-path, -o path to output txt file
+`;
+
+const cli = meow(description, {
   importMeta: import.meta,
   flags: {
     inputPath: {
@@ -17,7 +28,6 @@ const cli = meow("CSPrefabricate", {
       shortFlag: "i",
     },
   },
-  help: "Help text goes here",
 });
 
 const { inputPath, outputPath } = cli.flags;
