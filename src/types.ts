@@ -24,7 +24,7 @@ export enum Directive {
     TRUSTED_TYPES = "trusted-types",
     UPGRADE_INSECURE_REQUESTS = "upgrade-insecure-requests",
     BLOCK_ALL_MIXED_CONTENT = "block-all-mixed-content",
-};
+}
 
 type BasicDirective = Array<string | Record<string, Array<string>>>;
 interface ContentSecurityPolicy {
@@ -32,27 +32,27 @@ interface ContentSecurityPolicy {
     [Directive.SCRIPT_SRC]?: BasicDirective;
     [Directive.STYLE_SRC]?: BasicDirective;
     [Directive.IMG_SRC]?: BasicDirective;
-    [Directive.CONNECT_SRC]?: BasicDirective,
-    [Directive.FONT_SRC]?: BasicDirective,
-    [Directive.OBJECT_SRC]?: BasicDirective,
-    [Directive.MEDIA_SRC]?: BasicDirective,
-    [Directive.FRAME_SRC]?: BasicDirective,
-    [Directive.SANDBOX]?: BasicDirective,
-    [Directive.REPORT_URI]?: BasicDirective,
-    [Directive.CHILD_SRC]?: BasicDirective,
-    [Directive.FORM_ACTION]?: BasicDirective,
-    [Directive.FRAME_ANCESTORS]?: BasicDirective,
-    [Directive.PLUGIN_TYPES]?: BasicDirective,
-    [Directive.BASE_URI]?: BasicDirective,
-    [Directive.REPORT_TO]?: BasicDirective,
-    [Directive.WORKER_SRC]?: BasicDirective,
-    [Directive.MANIFEST_SRC]?: BasicDirective,
-    [Directive.PREFETCH_SRC]?: BasicDirective,
-    [Directive.NAVIGATE_TO]?: BasicDirective,
-    [Directive.REQUIRE_TRUSTED_TYPES_FOR]?: BasicDirective,
-    [Directive.TRUSTED_TYPES]?: BasicDirective,
-    [Directive.UPGRADE_INSECURE_REQUESTS]?: BasicDirective,
-    [Directive.BLOCK_ALL_MIXED_CONTENT]?: BasicDirective,
+    [Directive.CONNECT_SRC]?: BasicDirective;
+    [Directive.FONT_SRC]?: BasicDirective;
+    [Directive.OBJECT_SRC]?: BasicDirective;
+    [Directive.MEDIA_SRC]?: BasicDirective;
+    [Directive.FRAME_SRC]?: BasicDirective;
+    [Directive.SANDBOX]?: BasicDirective;
+    [Directive.REPORT_URI]?: BasicDirective;
+    [Directive.CHILD_SRC]?: BasicDirective;
+    [Directive.FORM_ACTION]?: BasicDirective;
+    [Directive.FRAME_ANCESTORS]?: BasicDirective;
+    [Directive.PLUGIN_TYPES]?: BasicDirective;
+    [Directive.BASE_URI]?: BasicDirective;
+    [Directive.REPORT_TO]?: BasicDirective;
+    [Directive.WORKER_SRC]?: BasicDirective;
+    [Directive.MANIFEST_SRC]?: BasicDirective;
+    [Directive.PREFETCH_SRC]?: BasicDirective;
+    [Directive.NAVIGATE_TO]?: BasicDirective;
+    [Directive.REQUIRE_TRUSTED_TYPES_FOR]?: BasicDirective;
+    [Directive.TRUSTED_TYPES]?: BasicDirective;
+    [Directive.UPGRADE_INSECURE_REQUESTS]?: BasicDirective;
+    [Directive.BLOCK_ALL_MIXED_CONTENT]?: BasicDirective;
 }
 
-export {ContentSecurityPolicy}
+export {ContentSecurityPolicy};

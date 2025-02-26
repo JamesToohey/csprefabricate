@@ -1,3 +1,5 @@
 # Ignore artifacts:
 .yarn
 *.yaml
+node_modules
+dist
