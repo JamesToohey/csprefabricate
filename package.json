@@ -11,6 +11,6 @@
   },
   "main": "dist/index.js",
   "scripts": {
-    "test": "node --loader tsx --test src/test/**/*test.ts"
+    "test": "tsx --test src/test/**/*test.ts"
   }
 }
