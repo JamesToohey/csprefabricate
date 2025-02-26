@@ -6,8 +6,8 @@ For example:
 
 ```typescript
 const input: ContentSecurityPolicy = {
-  [Directive.DEFAULT_SRC]: ["self"],
-  [Directive.IMG_SRC]: ["self", { "*.google": [".com", ".com.au"] }],
+    [Directive.DEFAULT_SRC]: ["self"],
+    [Directive.IMG_SRC]: ["self", {"*.google": [".com", ".com.au"]}],
 };
 const output = createCsp(csp);
 console.log(output);

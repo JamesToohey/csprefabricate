@@ -1,16 +1,16 @@
 {
-  "name": "csprefabricate",
-  "packageManager": "yarn@4.5.3",
-  "type": "module",
-  "devDependencies": {
-    "@tsconfig/node-lts": "^22.0.1",
-    "@types/node": "^22.13.5",
-    "prettier": "^3.5.2",
-    "tsx": "^4.19.3",
-    "typescript": "^5.7.3"
-  },
-  "main": "dist/index.js",
-  "scripts": {
-    "test": "node --loader tsx --test src/test/**/*test.ts"
-  }
+    "name": "csprefabricate",
+    "packageManager": "yarn@4.5.3",
+    "type": "module",
+    "devDependencies": {
+        "@tsconfig/node-lts": "^22.0.1",
+        "@types/node": "^22.13.5",
+        "prettier": "^3.5.2",
+        "tsx": "^4.19.3",
+        "typescript": "^5.7.3"
+    },
+    "main": "dist/index.js",
+    "scripts": {
+        "test": "tsx --test src/test/**/*test.ts"
+    }
 }

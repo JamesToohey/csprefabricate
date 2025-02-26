@@ -24,7 +24,7 @@ export enum Directive {
     TRUSTED_TYPES = "trusted-types",
     UPGRADE_INSECURE_REQUESTS = "upgrade-insecure-requests",
     BLOCK_ALL_MIXED_CONTENT = "block-all-mixed-content",
-};
+}
 
 type BasicDirective = Array<string | Record<string, Array<string>>>;
 type BlankDirective = null;
@@ -56,4 +56,4 @@ interface ContentSecurityPolicy {
     [Directive.BLOCK_ALL_MIXED_CONTENT]?: BlankDirective;
 }
 
-export {ContentSecurityPolicy}
+export {ContentSecurityPolicy};
