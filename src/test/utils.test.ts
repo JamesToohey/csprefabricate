@@ -1,6 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert";
 import { createCsp, processRules } from "../utils";
+import { ContentSecurityPolicy, Directive } from "../types";
 
 describe("Utils tests", () => {
   describe("processRules", () => {
@@ -22,20 +23,13 @@ describe("Utils tests", () => {
   });
 
   describe("createCsp", () => {
-    it("Formats a CSP string from an input yaml string", () => {
-      const yaml = `
-        csp:
-          default-src:
-            - self
-          img-src:
-            - self
-            - "*.google":
-              - .com
-              - .com.au
-          ooger:
-            - nope
-      `;
-      const cspString = createCsp(yaml);
+    it("Formats a CSP string", () => {
+      const csp: ContentSecurityPolicy = {
+        [Directive.DEFAULT_SRC]: ["self"],
+        [Directive.IMG_SRC]: ["self", {"*.google": [".com", ".com.au"]}]
+      }
+
+      const cspString = createCsp(csp);
       assert.strictEqual(
         cspString,
         "default-src 'self'; img-src 'self' *.google.com *.google.com.au;",

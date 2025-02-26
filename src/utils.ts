@@ -1,5 +1,5 @@
-import { parse } from "yaml";
 import { formatRule, isValidDirective } from "./helpers";
+import { ContentSecurityPolicy } from "./types";
 
 export const processRules = (
   rules: Array<string> | Array<string | Record<string, Array<string>>>,
@@ -17,10 +17,8 @@ export const processRules = (
     .join(" ");
 };
 
-export const createCsp = (yaml: string) => {
-  const parsed: Record<string, string[] | Record<string, Array<string>>> =
-    parse(yaml);
-  const cspString = Object.entries(parsed.csp)
+export const createCsp = (obj: ContentSecurityPolicy) => {
+  const cspString = Object.entries(obj)
     .filter(([directive, _rules]) => {
       const isValid = isValidDirective(directive)
       if (!isValid) {
