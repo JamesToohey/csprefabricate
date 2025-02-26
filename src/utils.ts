@@ -18,14 +18,16 @@ export const processRules = (
 };
 
 export const createCsp = (obj: ContentSecurityPolicy) => {
-  const cspString = Object.entries(obj)
-    .filter(([directive, _rules]) => {
-      const isValid = isValidDirective(directive)
-      if (!isValid) {
-        console.warn(`"${directive}" is not a valid CSP directive and has been ignored.`)
-      }
-      return isValid;
-    })
-    .map(([directive, rules]) => `${directive} ${processRules(rules)}`);
-  return `${cspString.join("; ")};`;
+    const cspString = Object.entries(obj)
+        .filter(([directive, _rules]) => {
+            const isValid = isValidDirective(directive);
+            if (!isValid) {
+                console.warn(
+                    `"${directive}" is not a valid CSP directive and has been ignored.`,
+                );
+            }
+            return isValid;
+        })
+        .map(([directive, rules]) => `${directive}${rules && rules.length > 0 ? " " + processRules(rules) : ""}`);
+    return `${cspString.join("; ")};`;
 };

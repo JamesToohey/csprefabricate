@@ -27,32 +27,33 @@ export enum Directive {
 };
 
 type BasicDirective = Array<string | Record<string, Array<string>>>;
+type BlankDirective = null;
 interface ContentSecurityPolicy {
     [Directive.DEFAULT_SRC]?: BasicDirective;
     [Directive.SCRIPT_SRC]?: BasicDirective;
     [Directive.STYLE_SRC]?: BasicDirective;
     [Directive.IMG_SRC]?: BasicDirective;
-    [Directive.CONNECT_SRC]?: BasicDirective,
-    [Directive.FONT_SRC]?: BasicDirective,
-    [Directive.OBJECT_SRC]?: BasicDirective,
-    [Directive.MEDIA_SRC]?: BasicDirective,
-    [Directive.FRAME_SRC]?: BasicDirective,
-    [Directive.SANDBOX]?: BasicDirective,
-    [Directive.REPORT_URI]?: BasicDirective,
-    [Directive.CHILD_SRC]?: BasicDirective,
-    [Directive.FORM_ACTION]?: BasicDirective,
-    [Directive.FRAME_ANCESTORS]?: BasicDirective,
-    [Directive.PLUGIN_TYPES]?: BasicDirective,
-    [Directive.BASE_URI]?: BasicDirective,
-    [Directive.REPORT_TO]?: BasicDirective,
-    [Directive.WORKER_SRC]?: BasicDirective,
-    [Directive.MANIFEST_SRC]?: BasicDirective,
-    [Directive.PREFETCH_SRC]?: BasicDirective,
-    [Directive.NAVIGATE_TO]?: BasicDirective,
-    [Directive.REQUIRE_TRUSTED_TYPES_FOR]?: BasicDirective,
-    [Directive.TRUSTED_TYPES]?: BasicDirective,
-    [Directive.UPGRADE_INSECURE_REQUESTS]?: BasicDirective,
-    [Directive.BLOCK_ALL_MIXED_CONTENT]?: BasicDirective,
+    [Directive.CONNECT_SRC]?: BasicDirective;
+    [Directive.FONT_SRC]?: BasicDirective;
+    [Directive.OBJECT_SRC]?: BasicDirective;
+    [Directive.MEDIA_SRC]?: BasicDirective;
+    [Directive.FRAME_SRC]?: BasicDirective;
+    [Directive.SANDBOX]?: BasicDirective;
+    [Directive.REPORT_URI]?: BasicDirective;
+    [Directive.CHILD_SRC]?: BasicDirective;
+    [Directive.FORM_ACTION]?: BasicDirective;
+    [Directive.FRAME_ANCESTORS]?: BasicDirective;
+    [Directive.PLUGIN_TYPES]?: BasicDirective;
+    [Directive.BASE_URI]?: BasicDirective;
+    [Directive.REPORT_TO]?: BasicDirective;
+    [Directive.WORKER_SRC]?: BasicDirective;
+    [Directive.MANIFEST_SRC]?: BasicDirective;
+    [Directive.PREFETCH_SRC]?: BasicDirective;
+    [Directive.NAVIGATE_TO]?: BasicDirective;
+    [Directive.REQUIRE_TRUSTED_TYPES_FOR]?: BasicDirective;
+    [Directive.TRUSTED_TYPES]?: BasicDirective;
+    [Directive.UPGRADE_INSECURE_REQUESTS]?: BlankDirective;
+    [Directive.BLOCK_ALL_MIXED_CONTENT]?: BlankDirective;
 }
 
 export {ContentSecurityPolicy}
