@@ -27,6 +27,7 @@ export enum Directive {
 }
 
 type BasicDirective = Array<string | Record<string, Array<string>>>;
+type BlankDirective = null;
 interface ContentSecurityPolicy {
     [Directive.DEFAULT_SRC]?: BasicDirective;
     [Directive.SCRIPT_SRC]?: BasicDirective;
@@ -51,8 +52,8 @@ interface ContentSecurityPolicy {
     [Directive.NAVIGATE_TO]?: BasicDirective;
     [Directive.REQUIRE_TRUSTED_TYPES_FOR]?: BasicDirective;
     [Directive.TRUSTED_TYPES]?: BasicDirective;
-    [Directive.UPGRADE_INSECURE_REQUESTS]?: BasicDirective;
-    [Directive.BLOCK_ALL_MIXED_CONTENT]?: BasicDirective;
+    [Directive.UPGRADE_INSECURE_REQUESTS]?: BlankDirective;
+    [Directive.BLOCK_ALL_MIXED_CONTENT]?: BlankDirective;
 }
 
 export {ContentSecurityPolicy};

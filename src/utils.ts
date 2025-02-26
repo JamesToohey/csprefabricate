@@ -28,6 +28,9 @@ export const createCsp = (obj: ContentSecurityPolicy) => {
             }
             return isValid;
         })
-        .map(([directive, rules]) => `${directive} ${processRules(rules)}`);
+        .map(
+            ([directive, rules]) =>
+                `${directive}${rules && rules.length > 0 ? " " + processRules(rules) : ""}`,
+        );
     return `${cspString.join("; ")};`;
 };
