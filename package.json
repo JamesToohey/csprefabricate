@@ -4,17 +4,13 @@
   "type": "module",
   "devDependencies": {
     "@tsconfig/node-lts": "^22.0.1",
-    "@types/node": "^22.10.2",
-    "prettier": "^3.4.2",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "@types/node": "^22.13.5",
+    "prettier": "^3.5.2",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
   },
+  "main": "dist/index.js",
   "scripts": {
-    "execute": "tsx ./src/main.ts",
     "test": "node --loader tsx --test src/test/**/*test.ts"
-  },
-  "dependencies": {
-    "meow": "^13.2.0",
-    "yaml": "^2.6.1"
   }
 }
