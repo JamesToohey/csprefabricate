@@ -1,32 +1,22 @@
 # csprefabricate (Work in progress)
 
-Generates a valid CSP string (currently in the form of a text file) from a YAML file.
+Returns a valid CSP string from an input object
 
-Example format
+For example:
 
-```yaml
-csp:
-  default-src:
-    - self
-  img-src:
-    - self
-    - "*.google":
-        - .com
-        - .com.au
-  invalid-directive:
-    - will-be-filtered-out
+```typescript
+const input: ContentSecurityPolicy = {
+  [Directive.DEFAULT_SRC]: ["self"],
+  [Directive.IMG_SRC]: ["self", { "*.google": [".com", ".com.au"] }],
+};
+const output = createCsp(csp);
+console.log(output);
+//> "default-src 'self'; img-src 'self' *.google.com *.google.com.au;",
 ```
 
 ## Future
 
-- Distribute as CLI (currently in development)
 - Generate baseline recommended CSPs
-
-## Run
-
-```
-❯ yarn execute --inputPath="./help/test.yaml" --outputPath "./help/out.txt"
-```
 
 ## Test
 
