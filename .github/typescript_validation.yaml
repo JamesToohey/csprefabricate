@@ -12,5 +12,5 @@ jobs:
         with:
           node-version: 20
           cache: 'yarn'
-      - run: yarn --frozen-lockfile
+      - run: yarn --immutable
       - run: yarn test
