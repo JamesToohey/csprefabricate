@@ -12,7 +12,7 @@ jobs:
           node-version: 20
           cache: 'yarn'
       - run: yarn --immutable
-      - run: yarn prettier
+      - run: yarn prettier --check .
   tsc:
     runs-on: ubuntu-latest
     steps:

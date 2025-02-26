@@ -1,3 +1,3 @@
-import { createCsp } from "./utils";
+import {createCsp} from "./utils";
 
 export {createCsp as create};

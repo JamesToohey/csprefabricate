@@ -1,12 +1,12 @@
 {
-  "extends": "@tsconfig/node-lts/tsconfig.json",
-  "compilerOptions": {
-    "strict": true,
-    "outDir": "dist",
-    "module": "preserve",
-    "declaration": true,
-    "moduleResolution": "bundler"
-  },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist", "**/*.test.ts"]
+    "extends": "@tsconfig/node-lts/tsconfig.json",
+    "compilerOptions": {
+        "strict": true,
+        "outDir": "dist",
+        "module": "preserve",
+        "declaration": true,
+        "moduleResolution": "bundler"
+    },
+    "include": ["src"],
+    "exclude": ["node_modules", "dist", "**/*.test.ts"]
 }
