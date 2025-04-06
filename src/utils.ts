@@ -1,5 +1,5 @@
-import {formatRule, isValidDirective} from "./helpers";
-import {ContentSecurityPolicy} from "./types";
+import {formatRule, isValidDirective} from "helpers";
+import {type ContentSecurityPolicy, Directive, type Rules} from "types";
 
 export const processRules = (
     rules: Array<string> | Array<string | Record<string, Array<string>>>,
@@ -17,8 +17,9 @@ export const processRules = (
         .join(" ");
 };
 
-export const createCsp = (obj: ContentSecurityPolicy) => {
-    const cspString = Object.entries(obj)
+export const create = (obj: ContentSecurityPolicy) => {
+    const entries = Object.entries(obj) as [Directive, Rules][];
+    const cspString = entries
         .filter(([directive, _rules]) => {
             const isValid = isValidDirective(directive);
             if (!isValid) {

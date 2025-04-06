@@ -1,5 +1,6 @@
 {
     "name": "csprefabricate",
+    "version": "0.1.0",
     "packageManager": "yarn@4.5.3",
     "type": "module",
     "devDependencies": {
@@ -10,7 +11,17 @@
         "typescript": "^5.7.3"
     },
     "main": "dist/index.js",
+    "files": [
+        "dist/"
+    ],
     "scripts": {
-        "test": "tsx --test src/test/**/*test.ts"
+        "build": "tsc",
+        "pack": "npm pack",
+        "prepack": "yarn typecheck && yarn test && yarn build",
+        "prettier": "prettier . --write",
+        "prepublish": "yarn version check",
+        "publish": "yarn npm publish",
+        "test": "tsx --test src/test/**/*test.ts",
+        "typecheck": "tsc --noEmit"
     }
 }

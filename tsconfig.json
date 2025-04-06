@@ -1,11 +1,21 @@
 {
     "extends": "@tsconfig/node-lts/tsconfig.json",
     "compilerOptions": {
-        "strict": true,
-        "outDir": "dist",
-        "module": "preserve",
         "declaration": true,
-        "moduleResolution": "bundler"
+        "module": "preserve",
+        "moduleResolution": "bundler",
+        "noImplicitAny": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "outDir": "dist",
+        "paths": {
+            "helpers": ["./src/helpers"],
+            "types": ["./src/types"],
+            "utils": ["./src/utils"],
+        },
+        "strict": true,
+        "target": "ES2024",
+        "verbatimModuleSyntax": true
     },
     "include": ["src"],
     "exclude": ["node_modules", "dist", "**/*.test.ts"]

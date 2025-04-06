@@ -1,3 +1,4 @@
-import {createCsp} from "./utils";
+import {type ContentSecurityPolicy, Directive} from "types";
+import {create} from "utils";
 
-export {createCsp as create};
+export {create, type Directive, type ContentSecurityPolicy};
