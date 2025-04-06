@@ -1,4 +1,4 @@
-import {ContentSecurityPolicy, Directive} from "./types";
-import {create} from "./utils";
+import {type ContentSecurityPolicy, Directive} from "types";
+import {create} from "utils";
 
 export {create, type Directive, type ContentSecurityPolicy};
