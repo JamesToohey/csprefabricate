@@ -1,4 +1,4 @@
-export enum Directive {
+enum Directive {
     DEFAULT_SRC = "default-src",
     SCRIPT_SRC = "script-src",
     STYLE_SRC = "style-src",
@@ -56,4 +56,4 @@ interface ContentSecurityPolicy {
     [Directive.BLOCK_ALL_MIXED_CONTENT]?: BlankDirective;
 }
 
-export {ContentSecurityPolicy};
+export {type ContentSecurityPolicy, Directive};

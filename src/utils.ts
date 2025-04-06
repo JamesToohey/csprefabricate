@@ -17,7 +17,7 @@ export const processRules = (
         .join(" ");
 };
 
-export const createCsp = (obj: ContentSecurityPolicy) => {
+export const create = (obj: ContentSecurityPolicy) => {
     const cspString = Object.entries(obj)
         .filter(([directive, _rules]) => {
             const isValid = isValidDirective(directive);
