@@ -70,5 +70,17 @@ describe("Utils tests", () => {
             const cspString = create(csp);
             assert.strictEqual(cspString, "sandbox;");
         });
+
+        it("Ignores invalid directives", () => {
+            const csp: ContentSecurityPolicy = {
+                [Directive.DEFAULT_SRC]: ["self"],
+                // @ts-expect-error deliberate testing of invalid directive
+                ["invalid-directive"]: ["self"],
+                [Directive.IMG_SRC]: ["my.domain.com"]
+            }
+
+            const cspString = create(csp);
+            assert.strictEqual(cspString, "default-src 'self'; img-src my.domain.com;");
+        });
     });
 });
