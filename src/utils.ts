@@ -1,5 +1,5 @@
-import {formatRule, isValidDirective} from "helpers";
-import {type ContentSecurityPolicy, Directive, type Rules} from "types";
+import {formatRule, isValidDirective} from "./helpers";
+import {ContentSecurityPolicy, Directive, Rules} from "./types";
 
 export const processRules = (
     rules: Array<string> | Array<string | Record<string, Array<string>>>,

@@ -57,4 +57,4 @@ interface ContentSecurityPolicy {
     [Directive.BLOCK_ALL_MIXED_CONTENT]?: BlankDirectiveRule;
 }
 
-export {type ContentSecurityPolicy, type Rules, Directive};
+export {ContentSecurityPolicy, Rules, Directive};
