@@ -8,9 +8,10 @@
         "noImplicitReturns": true,
         "noUnusedLocals": true,
         "outDir": "dist",
+        "rootDir": "src",
         "strict": true,
         "target": "ES2024",
     },
-    "include": ["src"],
-    "exclude": ["node_modules", "dist", "**/*.test.ts"]
+    "include": ["src/**/*.ts"],
+    "exclude": ["node_modules", "dist", ".yarn"]
 }

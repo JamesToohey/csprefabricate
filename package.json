@@ -6,6 +6,9 @@
     "devDependencies": {
         "@tsconfig/node-lts": "^22.0.1",
         "@types/node": "^22.13.5",
+        "@typescript-eslint/eslint-plugin": "^8.32.1",
+        "@typescript-eslint/parser": "^8.32.1",
+        "eslint": "^9.27.0",
         "prettier": "^3.5.2",
         "release-please": "^17.0.0",
         "tsx": "^4.19.3",
@@ -16,13 +19,14 @@
         "dist/"
     ],
     "scripts": {
-        "build": "tsc",
+        "build": "tsc --project tsconfig.build.json",
         "pack": "npm pack",
         "prepack": "yarn typecheck && yarn test && yarn build",
         "prettier": "prettier . --write",
         "prepublish": "yarn version check",
         "publish": "npm publish",
         "test": "tsx --test src/test/**/*test.ts",
-        "typecheck": "tsc --noEmit"
+        "typecheck": "tsc --noEmit",
+        "lint": "eslint ."
     }
 }
