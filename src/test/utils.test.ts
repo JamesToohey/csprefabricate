@@ -3,9 +3,9 @@ import assert from "node:assert";
 import {create, processRules} from "../utils";
 import {ContentSecurityPolicy, Directive} from "../types";
 
-describe("Utils tests", () => {
-    describe("processRules", () => {
-        it("Processes rules provided as an array of strings (simple)", () => {
+void describe("Utils tests", () => {
+    void describe("processRules", () => {
+        void it("Processes rules provided as an array of strings (simple)", () => {
             const rules = ["self", "*.google.com", "*.google.com.au"];
             assert.strictEqual(
                 processRules(rules),
@@ -13,7 +13,7 @@ describe("Utils tests", () => {
             );
         });
 
-        it("Processes rules provided a complex list of tlds", () => {
+        void it("Processes rules provided a complex list of tlds", () => {
             const rules = ["self", {"*.google": [".com", ".com.au"]}];
             assert.strictEqual(
                 processRules(rules),
@@ -22,8 +22,8 @@ describe("Utils tests", () => {
         });
     });
 
-    describe("create", () => {
-        it("Formats a CSP string with all rules", () => {
+    void describe("create", () => {
+        void it("Formats a CSP string with all rules", () => {
             const csp: ContentSecurityPolicy = {
                 [Directive.DEFAULT_SRC]: ["self"],
                 [Directive.SCRIPT_SRC]: ["self", "js.example.com"],
@@ -62,7 +62,7 @@ describe("Utils tests", () => {
             );
         });
 
-        it("Handles blank directives", () => {
+        void it("Handles blank directives", () => {
             const csp: ContentSecurityPolicy = {
                 [Directive.SANDBOX]: [],
             };
@@ -71,7 +71,7 @@ describe("Utils tests", () => {
             assert.strictEqual(cspString, "sandbox;");
         });
 
-        it("Ignores invalid directives", () => {
+        void it("Ignores invalid directives", () => {
             const csp: ContentSecurityPolicy = {
                 [Directive.DEFAULT_SRC]: ["self"],
                 // @ts-expect-error deliberate testing of invalid directive
