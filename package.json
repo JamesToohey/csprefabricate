@@ -24,7 +24,6 @@
         "prepack": "yarn typecheck && yarn test && yarn build",
         "prettier": "prettier . --write",
         "prepublish": "yarn version check",
-        "publish": "npm publish",
         "test": "tsx --test src/test/**/*test.ts",
         "typecheck": "tsc --noEmit",
         "lint": "eslint ."
