@@ -15,16 +15,63 @@ Currently `csprefabricate`:
 - Validates directive names
 - Supports providing a list of TLDs for a given domain name
 
+## Real World Examples
+
+### Example 1: Basic Strict Policy
+
 ```typescript
-import {create} from "csprefabricate";
+import {create, Directive, ContentSecurityPolicy} from "csprefabricate";
 
-const input = {
+const csp: ContentSecurityPolicy = {
+    [Directive.DEFAULT_SRC]: ["'self'"],
+    [Directive.SCRIPT_SRC]: ["'self'"],
+    [Directive.STYLE_SRC]: ["'self'"],
+    [Directive.IMG_SRC]: ["'self'", "data:"],
+    [Directive.OBJECT_SRC]: ["'none'"],
+    [Directive.BASE_URI]: ["'self'"],
+    [Directive.FORM_ACTION]: ["'self'"],
+};
+
+const cspString = create(csp);
+// "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self';"
+```
+
+### Example 2: Allowing Google Analytics
+
+```typescript
+import {create, Directive, ContentSecurityPolicy} from "csprefabricate";
+
+const csp: ContentSecurityPolicy = {
     [Directive.DEFAULT_SRC]: ["self"],
-    [Directive.IMG_SRC]: ["self", {"*.google": [".com", ".com.au"]}],
-} satisfies ContentSecurityPolicy;
+    [Directive.SCRIPT_SRC]: ["self", "*.googletagmanager.com"],
+    [Directive.IMG_SRC]: [
+        "self",
+        "*.google-analytics.com",
+        "https://*.googletagmanager.com",
+    ],
+    [Directive.CONNECT_SRC]: [
+        "self",
+        "https://*.google-analytics.com",
+        "https://*.analytics.google.com",
+        "https://*.googletagmanager.com",
+    ],
+};
 
-const output = create(csp);
-// > "default-src 'self'; img-src 'self' *.google.com *.google.com.au;",
+const cspString = create(csp);
+// "default-src 'self'; script-src 'self' *.googletagmanager.com; img-src 'self' *.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;"
+```
+
+### Example 3: Using TLD Expansion for Multiple Domains
+
+```typescript
+import {create, Directive, ContentSecurityPolicy} from "csprefabricate";
+
+const csp: ContentSecurityPolicy = {
+    [Directive.IMG_SRC]: ["self", {"*.example": [".com", ".co.uk", ".net"]}],
+};
+
+const cspString = create(csp);
+// "img-src 'self' *.example.com *.example.co.uk *.example.net;"
 ```
 
 ## Future

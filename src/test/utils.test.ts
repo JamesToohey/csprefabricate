@@ -62,15 +62,6 @@ void describe("Utils tests", () => {
             );
         });
 
-        void it("Handles blank directives", () => {
-            const csp: ContentSecurityPolicy = {
-                [Directive.SANDBOX]: [],
-            };
-
-            const cspString = create(csp);
-            assert.strictEqual(cspString, "sandbox;");
-        });
-
         void it("Ignores invalid directives", () => {
             const csp: ContentSecurityPolicy = {
                 [Directive.DEFAULT_SRC]: ["self"],
@@ -81,6 +72,37 @@ void describe("Utils tests", () => {
 
             const cspString = create(csp);
             assert.strictEqual(cspString, "default-src 'self'; img-src my.domain.com;");
+        });
+    });
+
+    void describe("Edge cases", () => {
+        void it("Handles empty rules array", () => {
+            const csp: ContentSecurityPolicy = {
+                [Directive.DEFAULT_SRC]: [],
+            };
+            const cspString = create(csp);
+            assert.strictEqual(cspString, "default-src;");
+        });
+
+        void it("Handles completely empty policy object", () => {
+            const csp: ContentSecurityPolicy = {};
+            const cspString = create(csp);
+            assert.strictEqual(cspString, "");
+        });
+
+        void it("Handles duplicate rules in an array", () => {
+            const csp: ContentSecurityPolicy = {
+                [Directive.DEFAULT_SRC]: ["self", "self", "example.com", "example.com"],
+            };
+            const cspString = create(csp);
+            assert.strictEqual(cspString, "default-src 'self' example.com;");
+        });
+
+        void it("Ignores non-string, non-object values in rules array at runtime", () => {
+            const csp = {
+                [Directive.DEFAULT_SRC]: ["self", 123, false, null, undefined],
+            } as unknown as ContentSecurityPolicy;
+            assert.doesNotThrow(() => create(csp));
         });
     });
 });
