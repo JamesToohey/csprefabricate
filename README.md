@@ -17,21 +17,23 @@ Currently `csprefabricate`:
 
 ## Real World Examples
 
-### Example 1: Basic Secure Policy
+### Example 1: Basic Strict Policy
 
 ```typescript
 import {create, Directive, ContentSecurityPolicy} from "csprefabricate";
 
 const csp: ContentSecurityPolicy = {
-    [Directive.DEFAULT_SRC]: ["self"],
-    [Directive.SCRIPT_SRC]: ["self", "cdn.jsdelivr.net"],
-    [Directive.STYLE_SRC]: ["self", "fonts.googleapis.com"],
-    [Directive.FONT_SRC]: ["self", "fonts.gstatic.com"],
-    [Directive.IMG_SRC]: ["self", "data:", "cdn.example.com"],
+    [Directive.DEFAULT_SRC]: ["'self'"],
+    [Directive.SCRIPT_SRC]: ["'self'"],
+    [Directive.STYLE_SRC]: ["'self'"],
+    [Directive.IMG_SRC]: ["'self'", "data:"],
+    [Directive.OBJECT_SRC]: ["'none'"],
+    [Directive.BASE_URI]: ["'self'"],
+    [Directive.FORM_ACTION]: ["'self'"],
 };
 
 const cspString = create(csp);
-// "default-src 'self'; script-src 'self' cdn.jsdelivr.net; style-src 'self' fonts.googleapis.com; font-src 'self' fonts.gstatic.com; img-src 'self' data: cdn.example.com; upgrade-insecure-requests;"
+// "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self';"
 ```
 
 ### Example 2: Allowing Google Analytics
@@ -41,17 +43,22 @@ import {create, Directive, ContentSecurityPolicy} from "csprefabricate";
 
 const csp: ContentSecurityPolicy = {
     [Directive.DEFAULT_SRC]: ["self"],
-    [Directive.SCRIPT_SRC]: [
+    [Directive.SCRIPT_SRC]: ["self", "*.googletagmanager.com"],
+    [Directive.IMG_SRC]: [
         "self",
-        "www.googletagmanager.com",
-        "www.google-analytics.com",
+        "*.google-analytics.com",
+        "https://*.googletagmanager.com",
     ],
-    [Directive.IMG_SRC]: ["self", "www.google-analytics.com"],
-    [Directive.CONNECT_SRC]: ["self", "www.google-analytics.com"],
+    [Directive.CONNECT_SRC]: [
+        "self",
+        "https://*.google-analytics.com",
+        "https://*.analytics.google.com",
+        "https://*.googletagmanager.com",
+    ],
 };
 
 const cspString = create(csp);
-// "default-src 'self'; script-src 'self' www.googletagmanager.com www.google-analytics.com; img-src 'self' www.google-analytics.com; connect-src 'self' www.google-analytics.com;"
+// "default-src 'self'; script-src 'self' *.googletagmanager.com; img-src 'self' *.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;"
 ```
 
 ### Example 3: Using TLD Expansion for Multiple Domains
