@@ -1,4 +1,4 @@
-name: "Lint PR"
+name: conventional-pr-titles
 
 on:
   pull_request:
