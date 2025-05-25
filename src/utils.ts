@@ -1,9 +1,9 @@
 import {formatRule, isValidDirective} from "./helpers";
-import {ContentSecurityPolicy, Directive, Rules} from "./types";
+import {ContentSecurityPolicy, Directive, Rules, BasicDirectiveRule} from "./types";
 
 export const processRules = (
-    rules: Array<string> | Array<string | Record<string, Array<string>>>,
-) => {
+    rules: BasicDirectiveRule,
+): string => {
     return rules
         .map((rule) => {
             if (typeof rule === "object") {
@@ -17,7 +17,13 @@ export const processRules = (
         .join(" ");
 };
 
-export const create = (obj: ContentSecurityPolicy) => {
+/**
+ * Creates a CSP string from a ContentSecurityPolicy object.
+ * Filters out invalid directives and formats the CSP string.
+ * @param obj - The ContentSecurityPolicy object.
+ * @returns The formatted CSP string.
+ */
+export const create = (obj: ContentSecurityPolicy): string => {
     const entries = Object.entries(obj) as [Directive, Rules][];
     const cspString = entries
         .filter(([directive, _rules]) => {
@@ -29,9 +35,11 @@ export const create = (obj: ContentSecurityPolicy) => {
             }
             return isValid;
         })
-        .map(
-            ([directive, rules]) =>
-                `${directive}${rules && rules.length > 0 ? " " + processRules(rules) : ""}`,
-        );
+        .map(([directive, rules]) => {
+            if (Array.isArray(rules) && rules.length > 0) {
+                return `${directive} ${processRules(rules)}`;
+            }
+            return `${directive}`;
+        });
     return `${cspString.join("; ")};`;
 };
