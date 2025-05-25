@@ -4,17 +4,20 @@ import {ContentSecurityPolicy, Directive, Rules, BasicDirectiveRule} from "./typ
 export const processRules = (
     rules: BasicDirectiveRule,
 ): string => {
-    return rules
-        .map((rule) => {
-            if (typeof rule === "object") {
-                return Object.entries(rule).map(([domain, tlds]) =>
-                    tlds.map((tld) => `${domain}${tld}`).join(" "),
-                );
-            } else {
-                return formatRule(rule);
+    // Flatten and deduplicate rules
+    const seen = new Set<string>();
+    for (const rule of rules) {
+        if (typeof rule === "object") {
+            for (const [domain, tlds] of Object.entries(rule)) {
+                for (const tld of tlds) {
+                    seen.add(`${domain}${tld}`);
+                }
             }
-        })
-        .join(" ");
+        } else {
+            seen.add(formatRule(rule));
+        }
+    }
+    return Array.from(seen).join(" ");
 };
 
 /**
@@ -36,10 +39,16 @@ export const create = (obj: ContentSecurityPolicy): string => {
             return isValid;
         })
         .map(([directive, rules]) => {
-            if (Array.isArray(rules) && rules.length > 0) {
-                return `${directive} ${processRules(rules)}`;
+            if (Array.isArray(rules)) {
+                // Filter out non-string/object values at runtime
+                const filtered: (string | Record<string, string[]>)[] = rules.filter(
+                    (r): r is string | Record<string, string[]> =>
+                        typeof r === "string" || (typeof r === "object" && r !== null)
+                );
+                const processed = processRules(filtered);
+                return processed ? `${directive} ${processed}` : `${directive}`;
             }
             return `${directive}`;
         });
-    return `${cspString.join("; ")};`;
+    return cspString.length > 0 ? `${cspString.join("; ")};` : "";
 };
