@@ -55,4 +55,4 @@ interface ContentSecurityPolicy {
     [Directive.UPGRADE_INSECURE_REQUESTS]?: BlankDirectiveRule;
     [Directive.BLOCK_ALL_MIXED_CONTENT]?: BlankDirectiveRule;
 }
-export { ContentSecurityPolicy, Rules, Directive };
+export { ContentSecurityPolicy, Rules, Directive, BasicDirectiveRule };

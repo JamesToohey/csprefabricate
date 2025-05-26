@@ -1,4 +1,4 @@
-import {describe, it, after, mock, Mock, beforeEach} from "node:test";
+import {describe, it, afterEach, mock, Mock, beforeEach} from "node:test";
 import assert from "node:assert";
 import {create, processRules} from "../utils";
 import {ContentSecurityPolicy, Directive} from "../types";

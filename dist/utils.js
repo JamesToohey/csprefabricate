@@ -1,26 +1,46 @@
-import { formatRule, isValidDirective } from "./helpers";
+import { formatRule, isValidDirective, warnOnCspIssues } from "./helpers";
 export const processRules = (rules) => {
-    return rules
-        .map((rule) => {
+    // Flatten and deduplicate rules
+    const seen = new Set();
+    for (const rule of rules) {
         if (typeof rule === "object") {
-            return Object.entries(rule).map(([domain, tlds]) => tlds.map((tld) => `${domain}${tld}`).join(" "));
+            for (const [domain, tlds] of Object.entries(rule)) {
+                for (const tld of tlds) {
+                    seen.add(`${domain}${tld}`);
+                }
+            }
         }
         else {
-            return formatRule(rule);
+            seen.add(formatRule(rule));
         }
-    })
-        .join(" ");
+    }
+    return Array.from(seen).join(" ");
 };
-export const create = (obj) => {
+/**
+ * Creates a CSP string from a ContentSecurityPolicy object.
+ * Filters out invalid directives and formats the CSP string.
+ * @param obj - The ContentSecurityPolicy object.
+ * @returns The formatted CSP string.
+ */
+export const create = (obj, warningOptions) => {
+    warnOnCspIssues(obj, warningOptions);
     const entries = Object.entries(obj);
     const cspString = entries
         .filter(([directive, _rules]) => {
         const isValid = isValidDirective(directive);
         if (!isValid) {
-            console.warn(`"${directive}" is not a valid CSP directive and has been ignored.`);
+            console.warn(`[CSPrefabricate] "${directive}" is not a valid CSP directive and has been ignored.`);
         }
         return isValid;
     })
-        .map(([directive, rules]) => `${directive}${rules && rules.length > 0 ? " " + processRules(rules) : ""}`);
-    return `${cspString.join("; ")};`;
+        .map(([directive, rules]) => {
+        if (Array.isArray(rules)) {
+            // Filter out non-string/object values at runtime
+            const filtered = rules.filter((r) => typeof r === "string" || (typeof r === "object" && r !== null));
+            const processed = processRules(filtered);
+            return processed ? `${directive} ${processed}` : `${directive}`;
+        }
+        return `${directive}`;
+    });
+    return cspString.length > 0 ? `${cspString.join("; ")};` : "";
 };
