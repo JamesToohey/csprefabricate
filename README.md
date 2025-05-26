@@ -116,4 +116,3 @@ const cspString = create(csp);
 ## Future
 
 - Generate baseline recommended CSPs (for example, Google Analytics)
-- Warnings for insecure configurations
