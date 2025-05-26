@@ -1,9 +1,20 @@
-import {describe, it} from "node:test";
+import {describe, it, after, mock, Mock, beforeEach} from "node:test";
 import assert from "node:assert";
 import {create, processRules} from "../utils";
 import {ContentSecurityPolicy, Directive} from "../types";
 
 void describe("Utils tests", () => {
+    let mockWarn: Mock<typeof console.warn>;
+    const originalWarn = console.warn;
+
+    void beforeEach(() => {
+        mockWarn = mock.method(console, "warn", () => {});
+    });
+
+    void after(() => {
+        console.warn = originalWarn;
+    });
+
     void describe("processRules", () => {
         void it("Processes rules provided as an array of strings (simple)", () => {
             const rules = ["self", "*.google.com", "*.google.com.au"];
@@ -72,6 +83,19 @@ void describe("Utils tests", () => {
 
             const cspString = create(csp);
             assert.strictEqual(cspString, "default-src 'self'; img-src my.domain.com;");
+        });
+
+        void it("Calls warning helper when invoked", () => {
+            const csp: ContentSecurityPolicy = {
+                [Directive.DEFAULT_SRC]: ["self"],
+            };
+            create(csp);
+
+            assert.equal(mockWarn.mock.calls.length, 3);
+            const args = mockWarn.mock.calls.map((call) => call.arguments)
+            assert.equal(args[0][0], "[CSPrefabricate] Missing recommended directive: object-src");
+            assert.equal(args[1][0], "[CSPrefabricate] Missing recommended directive: base-uri");
+            assert.equal(args[2][0], "[CSPrefabricate] Missing recommended directive: form-action");
         });
     });
 
