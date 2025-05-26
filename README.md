@@ -22,7 +22,8 @@ By default, `csprefabricate` will warn you about common CSP issues, such as:
 
 - Overly permissive sources (e.g. using `*`)
 - Missing recommended directives (i.e. `object-src`, `base-uri`, `form-action`)
-- Use of `'unsafe-inline'` in `script-src` without nonces or hashes
+- Use of `'unsafe-inline'` in `script-src`, even if nonces or hashes are present
+- Missing nonces or hashes when using `'unsafe-inline'` in `script-src`
 - Allowing `data:` in `img-src` or `media-src`
 
 You can control which warnings are shown by passing an optional `WarningOptions` object to the `create` function:

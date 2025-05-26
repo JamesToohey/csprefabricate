@@ -11,7 +11,7 @@ void describe("Utils tests", () => {
         mockWarn = mock.method(console, "warn", () => {});
     });
 
-    void after(() => {
+    void afterEach(() => {
         console.warn = originalWarn;
     });
 

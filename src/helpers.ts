@@ -1,5 +1,4 @@
-import {ContentSecurityPolicy} from "./types";
-import {Directive} from "./types";
+import {ContentSecurityPolicy, Directive} from "./types";
 
 export interface WarningOptions {
   overlyPermissive?: boolean;
@@ -72,7 +71,7 @@ export function warnOnCspIssues(
 
   // 2. Missing important directives
   if (options.missingDirectives) {
-    ["object-src", "base-uri", "form-action"].forEach(directive => {
+    [Directive.OBJECT_SRC, Directive.BASE_URI, Directive.FORM_ACTION].forEach(directive => {
       if (!(directive in csp)) {
         console.warn(`[CSPrefabricate] Missing recommended directive: ${directive}`);
       }
