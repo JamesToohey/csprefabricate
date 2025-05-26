@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/JamesToohey/csprefabricate/compare/v0.2.3...v0.3.0) (2025-05-26)
+
+
+### Features
+
+* Add warnings for common misconfigurations ([#21](https://github.com/JamesToohey/csprefabricate/issues/21)) ([d47858a](https://github.com/JamesToohey/csprefabricate/commit/d47858a04b777edec738b0f8ead23845795597a5))
+
 ## [0.2.3](https://github.com/JamesToohey/csprefabricate/compare/0.2.2...v0.2.3) (2025-05-25)
 
 

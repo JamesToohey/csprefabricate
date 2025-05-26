@@ -1,6 +1,6 @@
 {
     "name": "csprefabricate",
-    "version": "0.2.3",
+    "version": "0.3.0",
     "packageManager": "yarn@4.5.3",
     "type": "module",
     "devDependencies": {
