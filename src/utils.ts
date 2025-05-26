@@ -1,4 +1,4 @@
-import {formatRule, isValidDirective} from "./helpers";
+import {formatRule, isValidDirective, warnOnCspIssues, WarningOptions} from "./helpers";
 import {ContentSecurityPolicy, Directive, Rules, BasicDirectiveRule} from "./types";
 
 export const processRules = (
@@ -26,14 +26,15 @@ export const processRules = (
  * @param obj - The ContentSecurityPolicy object.
  * @returns The formatted CSP string.
  */
-export const create = (obj: ContentSecurityPolicy): string => {
+export const create = (obj: ContentSecurityPolicy, warningOptions?: WarningOptions): string => {
+    warnOnCspIssues(obj, warningOptions);
     const entries = Object.entries(obj) as [Directive, Rules][];
     const cspString = entries
         .filter(([directive, _rules]) => {
             const isValid = isValidDirective(directive);
             if (!isValid) {
                 console.warn(
-                    `"${directive}" is not a valid CSP directive and has been ignored.`,
+                    `[CSPrefabricate] "${directive}" is not a valid CSP directive and has been ignored.`,
                 );
             }
             return isValid;
