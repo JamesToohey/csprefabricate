@@ -34,7 +34,7 @@ export const create = (obj: ContentSecurityPolicy, warningOptions?: WarningOptio
             const isValid = isValidDirective(directive);
             if (!isValid) {
                 console.warn(
-                    `"[CSPrefabricate] ${directive}" is not a valid CSP directive and has been ignored.`,
+                    `[CSPrefabricate] "${directive}" is not a valid CSP directive and has been ignored.`,
                 );
             }
             return isValid;
