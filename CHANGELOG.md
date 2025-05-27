@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.1](https://github.com/JamesToohey/csprefabricate/compare/v0.3.0...v0.3.1) (2025-05-27)
+
+
+### Bug Fixes
+
+* fix publish command ([#23](https://github.com/JamesToohey/csprefabricate/issues/23)) ([7b537f3](https://github.com/JamesToohey/csprefabricate/commit/7b537f337e20c188a89ddb3dd3f2ab5ddefade04))
+
 ## [0.3.0](https://github.com/JamesToohey/csprefabricate/compare/v0.2.3...v0.3.0) (2025-05-26)
 
 
