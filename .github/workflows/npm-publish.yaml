@@ -18,6 +18,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org/'
       - run: yarn --immutable
       - run: yarn build
-      - run: yarn publish --access public --non-interactive
+      - run: npm publish --access public --non-interactive
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
