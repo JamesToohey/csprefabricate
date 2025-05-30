@@ -20,6 +20,7 @@
     ],
     "scripts": {
         "build": "tsc --project tsconfig.build.json",
+        "functional-test": "yarn build && tsx --test src/test/functional/functional.test.js",
         "pack": "npm pack",
         "prepack": "yarn typecheck && yarn test && yarn build",
         "prepublish": "yarn version check",
