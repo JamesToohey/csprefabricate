@@ -82,15 +82,19 @@ const cspString = create(csp);
 import {create, Directive, ContentSecurityPolicy} from "csprefabricate";
 
 const csp: ContentSecurityPolicy = {
-    [Directive.DEFAULT_SRC]: ["self"],
-    [Directive.SCRIPT_SRC]: ["self", "*.googletagmanager.com"],
+    [Directive.DEFAULT_SRC]: ["'self'"],
+    [Directive.SCRIPT_SRC]: ["'self'", "*.googletagmanager.com"],
+    [Directive.STYLE_SRC]: ["'self'"],
     [Directive.IMG_SRC]: [
-        "self",
-        "*.google-analytics.com",
+        "'self'",
+        "https://*.google-analytics.com",
         "https://*.googletagmanager.com",
     ],
+    [Directive.OBJECT_SRC]: ["'none'"],
+    [Directive.BASE_URI]: ["'self'"],
+    [Directive.FORM_ACTION]: ["'self'"],
     [Directive.CONNECT_SRC]: [
-        "self",
+        "'self'",
         "https://*.google-analytics.com",
         "https://*.analytics.google.com",
         "https://*.googletagmanager.com",
@@ -98,7 +102,7 @@ const csp: ContentSecurityPolicy = {
 };
 
 const cspString = create(csp);
-// "default-src 'self'; script-src 'self' *.googletagmanager.com; img-src 'self' *.google-analytics.com https://*.googletagmanager.com; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;"
+// "default-src 'self'; script-src 'self' *.googletagmanager.com; style-src 'self'; img-src 'self' https://*.google-analytics.com https://*.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;"
 ```
 
 ### Example 3: Using TLD Expansion for Multiple Domains
@@ -114,6 +118,22 @@ const cspString = create(csp);
 // "img-src 'self' *.example.com *.example.co.uk *.example.net;"
 ```
 
-## Future
+## Baseline Recommended CSPs
 
-- Generate baseline recommended CSPs (for example, Google Analytics)
+You can quickly generate a recommended Content Security Policy for common use cases using built-in baselines.
+
+Available Baselines:
+
+- BASELINE_STRICT_CSP
+- GOOGLE_ANALYTICS_CSP
+- GOOGLE_ANALYTICS_WITH_SIGNALS_CSP
+
+### Google Analytics Baseline CSP
+
+Allow Google Analytics and Tag Manager:
+
+```typescript
+import {create, Baseline} from "csprefabricate";
+
+const cspString = create(Baseline.GOOGLE_ANALYTICS_CSP);
+```

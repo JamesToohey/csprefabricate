@@ -78,11 +78,14 @@ void describe("Utils tests", () => {
                 [Directive.DEFAULT_SRC]: ["self"],
                 // @ts-expect-error deliberate testing of invalid directive
                 ["invalid-directive"]: ["self"],
-                [Directive.IMG_SRC]: ["my.domain.com"]
-            }
+                [Directive.IMG_SRC]: ["my.domain.com"],
+            };
 
             const cspString = create(csp);
-            assert.strictEqual(cspString, "default-src 'self'; img-src my.domain.com;");
+            assert.strictEqual(
+                cspString,
+                "default-src 'self'; img-src my.domain.com;",
+            );
         });
 
         void it("Calls warning helper when invoked", () => {
@@ -92,10 +95,19 @@ void describe("Utils tests", () => {
             create(csp);
 
             assert.equal(mockWarn.mock.calls.length, 3);
-            const args = mockWarn.mock.calls.map((call) => call.arguments)
-            assert.equal(args[0][0], "[CSPrefabricate] Missing recommended directive: object-src");
-            assert.equal(args[1][0], "[CSPrefabricate] Missing recommended directive: base-uri");
-            assert.equal(args[2][0], "[CSPrefabricate] Missing recommended directive: form-action");
+            const args = mockWarn.mock.calls.map((call) => call.arguments);
+            assert.equal(
+                args[0][0],
+                "[CSPrefabricate] Missing recommended directive: object-src",
+            );
+            assert.equal(
+                args[1][0],
+                "[CSPrefabricate] Missing recommended directive: base-uri",
+            );
+            assert.equal(
+                args[2][0],
+                "[CSPrefabricate] Missing recommended directive: form-action",
+            );
         });
     });
 
@@ -116,7 +128,12 @@ void describe("Utils tests", () => {
 
         void it("Handles duplicate rules in an array", () => {
             const csp: ContentSecurityPolicy = {
-                [Directive.DEFAULT_SRC]: ["self", "self", "example.com", "example.com"],
+                [Directive.DEFAULT_SRC]: [
+                    "self",
+                    "self",
+                    "example.com",
+                    "example.com",
+                ],
             };
             const cspString = create(csp);
             assert.strictEqual(cspString, "default-src 'self' example.com;");
