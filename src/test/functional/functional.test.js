@@ -1,6 +1,6 @@
-import { describe, it } from "node:test";
+import {describe, it} from "node:test";
 import assert from "node:assert";
-import { create, Directive, Baseline } from "../../../dist/index.js";
+import {create, Directive, Baseline} from "../../../dist/index.js";
 
 describe("/dist/ Functional Test", () => {
     it("Should export Directive enum", () => {
