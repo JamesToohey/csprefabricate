@@ -22,7 +22,6 @@
         "build": "tsc --project tsconfig.build.json",
         "pack": "npm pack",
         "prepack": "yarn typecheck && yarn test && yarn build",
-        "prettier": "prettier . --write",
         "prepublish": "yarn version check",
         "test": "tsx --test src/test/**/*test.ts",
         "typecheck": "tsc --noEmit",
