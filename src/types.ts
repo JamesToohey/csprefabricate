@@ -24,6 +24,10 @@ enum Directive {
     TRUSTED_TYPES = "trusted-types",
     UPGRADE_INSECURE_REQUESTS = "upgrade-insecure-requests",
     BLOCK_ALL_MIXED_CONTENT = "block-all-mixed-content",
+
+
+
+    
 }
 
 type BasicDirectiveRule = Array<string | Record<string, Array<string>>>;
