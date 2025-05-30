@@ -1,9 +1,17 @@
-import {formatRule, isValidDirective, warnOnCspIssues, WarningOptions} from "./helpers";
-import {ContentSecurityPolicy, Directive, Rules, BasicDirectiveRule} from "./types";
+import {
+    formatRule,
+    isValidDirective,
+    warnOnCspIssues,
+    WarningOptions,
+} from "./helpers";
+import {
+    ContentSecurityPolicy,
+    Directive,
+    Rules,
+    BasicDirectiveRule,
+} from "./types";
 
-export const processRules = (
-    rules: BasicDirectiveRule,
-): string => {
+export const processRules = (rules: BasicDirectiveRule): string => {
     // Flatten and deduplicate rules
     const seen = new Set<string>();
     for (const rule of rules) {
@@ -26,7 +34,10 @@ export const processRules = (
  * @param obj - The ContentSecurityPolicy object.
  * @returns The formatted CSP string.
  */
-export const create = (obj: ContentSecurityPolicy, warningOptions?: WarningOptions): string => {
+export const create = (
+    obj: ContentSecurityPolicy,
+    warningOptions?: WarningOptions,
+): string => {
     warnOnCspIssues(obj, warningOptions);
     const entries = Object.entries(obj) as [Directive, Rules][];
     const cspString = entries
@@ -42,10 +53,12 @@ export const create = (obj: ContentSecurityPolicy, warningOptions?: WarningOptio
         .map(([directive, rules]) => {
             if (Array.isArray(rules)) {
                 // Filter out non-string/object values at runtime
-                const filtered: (string | Record<string, string[]>)[] = rules.filter(
-                    (r): r is string | Record<string, string[]> =>
-                        typeof r === "string" || (typeof r === "object" && r !== null)
-                );
+                const filtered: (string | Record<string, string[]>)[] =
+                    rules.filter(
+                        (r): r is string | Record<string, string[]> =>
+                            typeof r === "string" ||
+                            (typeof r === "object" && r !== null),
+                    );
                 const processed = processRules(filtered);
                 return processed ? `${directive} ${processed}` : `${directive}`;
             }
