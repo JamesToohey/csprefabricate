@@ -29,7 +29,6 @@ void describe("Baseline CSPs", () => {
 
     void it("GOOGLE_ANALYTICS_CSP should produce no warnings", () => {
         warnOnCspIssues(GOOGLE_ANALYTICS_CSP);
-        console.log("Warnings:", warnings);
         assert.strictEqual(warnings.length, 0);
     });
 
