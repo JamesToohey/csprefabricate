@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/JamesToohey/csprefabricate/compare/v0.3.1...v0.4.0) (2025-05-30)
+
+
+### Features
+
+* add baseline CSPs ([#25](https://github.com/JamesToohey/csprefabricate/issues/25)) ([6dd8588](https://github.com/JamesToohey/csprefabricate/commit/6dd858853d143de66979e74ba981844c2b1e28d3))
+
 ## [0.3.1](https://github.com/JamesToohey/csprefabricate/compare/v0.3.0...v0.3.1) (2025-05-27)
 
 
