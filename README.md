@@ -2,7 +2,7 @@
 
 **Generate a valid CSP with TypeScript.**
 
-Content Security Policies (CSPs) are cumbersome strings that are frusting to work with:
+Content Security Policies (CSPs) are cumbersome strings that are frustrating to work with:
 
 - Fickle syntax
 - Duplication when multiple TLDs are required
