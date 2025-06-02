@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.0.0](https://github.com/JamesToohey/csprefabricate/compare/v0.4.0...v1.0.0) (2025-06-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* updates for 1.0 release ([#29](https://github.com/JamesToohey/csprefabricate/issues/29))
+
+### Documentation
+
+* updates for 1.0 release ([#29](https://github.com/JamesToohey/csprefabricate/issues/29)) ([1629ea1](https://github.com/JamesToohey/csprefabricate/commit/1629ea1e415142a54f6bd538832dbca4cdf1f179))
+
 ## [0.4.0](https://github.com/JamesToohey/csprefabricate/compare/v0.3.1...v0.4.0) (2025-05-30)
 
 
