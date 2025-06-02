@@ -1,4 +1,4 @@
-# csprefabricate (Work in progress)
+# csprefabricate
 
 **Generate a valid CSP with TypeScript.**
 
