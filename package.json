@@ -1,8 +1,55 @@
 {
     "name": "csprefabricate",
     "version": "0.4.0",
+    "description": "Generate valid and secure Content Security Policies (CSP) with TypeScript.",
+    "keywords": [
+        "csp",
+        "content-security-policy",
+        "security",
+        "web-security",
+        "xss-protection",
+        "typescript"
+    ],
+    "homepage": "https://github.com/jamestoohey/csprefabricate#readme",
+    "bugs": {
+        "url": "https://github.com/jamestoohey/csprefabricate/issues"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/jamestoohey/csprefabricate.git"
+    },
+    "license": "MIT",
+    "author": {
+        "name": "James Toohey",
+        "url": "https://github.com/jamestoohey"
+    },
     "packageManager": "yarn@4.5.3",
     "type": "module",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "files": [
+        "dist/",
+        "README.md",
+        "LICENSE",
+        "CHANGELOG.md"
+    ],
+    "scripts": {
+        "build": "tsc --project tsconfig.build.json",
+        "functional-test": "yarn build && tsx --test src/test/functional/functional.test.js",
+        "lint": "eslint .",
+        "pack": "npm pack",
+        "prepack": "yarn typecheck && yarn test && yarn build",
+        "prepublish": "yarn version check",
+        "test": "tsx --test src/test/**/*test.ts",
+        "test:watch": "tsx --test --watch src/test/**/*test.ts",
+        "typecheck": "tsc --noEmit"
+    },
     "devDependencies": {
         "@tsconfig/node-lts": "^22.0.1",
         "@types/node": "^22.13.5",
@@ -14,18 +61,7 @@
         "tsx": "^4.19.3",
         "typescript": "^5.7.3"
     },
-    "main": "dist/index.js",
-    "files": [
-        "dist/"
-    ],
-    "scripts": {
-        "build": "tsc --project tsconfig.build.json",
-        "functional-test": "yarn build && tsx --test src/test/functional/functional.test.js",
-        "pack": "npm pack",
-        "prepack": "yarn typecheck && yarn test && yarn build",
-        "prepublish": "yarn version check",
-        "test": "tsx --test src/test/**/*test.ts",
-        "typecheck": "tsc --noEmit",
-        "lint": "eslint ."
+    "engines": {
+        "node": ">=18"
     }
 }
