@@ -1,6 +1,6 @@
 # csprefabricate (Work in progress)
 
-**Generate a valid CSP with JavaScript. Built with TypeScript.**
+**Generate a valid CSP with TypeScript.**
 
 Content Security Policies (CSPs) are cumbersome strings that are frusting to work with:
 
