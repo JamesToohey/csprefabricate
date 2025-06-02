@@ -5,7 +5,7 @@
 Content Security Policies (CSPs) are cumbersome strings that are frusting to work with:
 
 - Fickle syntax
-- Duplicattion when multiple TLDs are required
+- Duplication when multiple TLDs are required
 - Easy to allow insecure configuration
 
 This project aims to make creating useful and secure CSPs a more pleasant experience.
