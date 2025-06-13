@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/JamesToohey/csprefabricate/compare/v1.0.0...v2.0.0) (2025-06-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* issues when using csprefabricate with commonjs imports ([#31](https://github.com/JamesToohey/csprefabricate/issues/31))
+
+### Bug Fixes
+
+* issues when using csprefabricate with commonjs imports ([#31](https://github.com/JamesToohey/csprefabricate/issues/31)) ([76d57b6](https://github.com/JamesToohey/csprefabricate/commit/76d57b641813d10557069e0d5b119853212f4544))
+
 ## [1.0.0](https://github.com/JamesToohey/csprefabricate/compare/v0.4.0...v1.0.0) (2025-06-02)
 
 
