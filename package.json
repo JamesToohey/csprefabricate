@@ -24,11 +24,11 @@
         "url": "https://github.com/jamestoohey"
     },
     "packageManager": "yarn@4.5.3",
-    "type": "module",
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
-            "import": "./dist/index.js"
+            "require": "./dist/index.js",
+            "default": "./dist/index.js"
         }
     },
     "main": "dist/index.js",
