@@ -2,15 +2,15 @@
     "extends": "@tsconfig/node-lts/tsconfig.json",
     "compilerOptions": {
         "declaration": true,
-        "module": "preserve",
-        "moduleResolution": "bundler",
+        "module": "CommonJS",
+        "moduleResolution": "node",
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "noUnusedLocals": true,
         "outDir": "dist",
         "rootDir": "src",
         "strict": true,
-        "target": "ES2024"
+        "target": "ES2022"
     },
     "include": ["src/**/*.ts"],
     "exclude": ["node_modules", "dist", ".yarn"]
