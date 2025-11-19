@@ -1,5 +1,8 @@
 name: conventional-pr-titles
 
+permissions:
+  contents: read
+
 on:
   pull_request:
     types:
