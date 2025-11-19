@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/JamesToohey/csprefabricate/compare/v2.0.0...v2.0.1) (2025-11-19)
+
+
+### Bug Fixes
+
+* **security:** Update Glob to fix vulnerability ([#34](https://github.com/JamesToohey/csprefabricate/issues/34)) ([9f9bccd](https://github.com/JamesToohey/csprefabricate/commit/9f9bccdb8d3862242cd28ae529783848c03242c6))
+
 ## [2.0.0](https://github.com/JamesToohey/csprefabricate/compare/v1.0.0...v2.0.0) (2025-06-13)
 
 
