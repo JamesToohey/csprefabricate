@@ -2,15 +2,16 @@
 # See: https://github.com/googleapis/release-please#github-action
 
 name: release-please
-on:
-  push:
-    branches:
-      - main
 
 permissions:
   contents: write
   pull-requests: write
   issues: write
+
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   release-please:
