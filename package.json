@@ -1,6 +1,6 @@
 {
     "name": "csprefabricate",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "description": "Generate valid and secure Content Security Policies (CSP) with TypeScript.",
     "keywords": [
         "csp",
