@@ -17,8 +17,12 @@ jobs:
         with:
           node-version: 20
           cache: 'yarn'
-      - run: echo "registry=https://registry.npmjs.org/" > .npmrc
+          registry-url: 'https://registry.npmjs.org'
       - run: yarn --immutable
       - run: yarn build
       - name: Publish to npm
-        run: npm publish --provenance --access public
+        run: |
+          npm config delete //registry.npmjs.org/:_authToken
+          npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ''
