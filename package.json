@@ -21,6 +21,7 @@
     "publishConfig": {
         "provenance": true
     },
+    "license": "MIT",
     "author": {
         "name": "James Toohey",
         "url": "https://github.com/jamestoohey"
