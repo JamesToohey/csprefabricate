@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.13](https://github.com/JamesToohey/csprefabricate/compare/v2.0.12...v2.0.13) (2026-01-30)
+
+
+### Bug Fixes
+
+* try again ([618e057](https://github.com/JamesToohey/csprefabricate/commit/618e0572ebf57e124a9d206bab9e84c24f62f24f))
+
 ## [2.0.12](https://github.com/JamesToohey/csprefabricate/compare/v2.0.11...v2.0.12) (2026-01-30)
 
 
