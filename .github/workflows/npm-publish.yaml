@@ -1,4 +1,4 @@
-name: npm-publish-on-release
+name: npm-publish
 
 permissions:
   contents: read
@@ -19,7 +19,6 @@ jobs:
         with:
           node-version: 20
           cache: 'yarn'
-          registry-url: 'https://registry.npmjs.org/'
       - run: yarn --immutable
       - run: yarn build
       - run: npm publish --access public --non-interactive
