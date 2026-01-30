@@ -19,9 +19,8 @@ jobs:
         with:
           node-version: 20
           cache: 'yarn'
-          registry-url: 'https://registry.npmjs.org'
       - run: yarn --immutable
       - run: yarn build
       - name: Publish to npm
-        run: npm publish --access public
+        run: npm publish --provenance --access public
 
