@@ -16,7 +16,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/jamestoohey/csprefabricate.git"
+        "url": "https://github.com/jamestoohey/csprefabricate"
     },
     "publishConfig": {
         "provenance": true
