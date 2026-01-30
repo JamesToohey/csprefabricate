@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.6](https://github.com/JamesToohey/csprefabricate/compare/v2.0.5...v2.0.6) (2026-01-30)
+
+
+### Bug Fixes
+
+* **ci/cd:** Fix npm publish config (take 3) ([#47](https://github.com/JamesToohey/csprefabricate/issues/47)) ([fc6b7e6](https://github.com/JamesToohey/csprefabricate/commit/fc6b7e60e8dd4612f36ac0f58ab770b48c3ccadc))
+
 ## [2.0.5](https://github.com/JamesToohey/csprefabricate/compare/v2.0.4...v2.0.5) (2026-01-30)
 
 
