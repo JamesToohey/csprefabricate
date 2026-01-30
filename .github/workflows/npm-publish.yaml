@@ -15,15 +15,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v6
         with:
           node-version: 24
-          cache: 'yarn'
-          registry-url: 'https://registry.npmjs.org'
-      - run: echo "registry=https://registry.npmjs.org/" > .npmrc
+          registry-url: "https://registry.npmjs.org"
+
       - run: yarn --immutable
       - run: yarn build
-      - run: npm install -g npm@latest
-      - name: Publish to npm
-        run: NODE_AUTH_TOKEN="" npm publish --provenance --access public
+      - run: NODE_AUTH_TOKEN="" npm publish
 

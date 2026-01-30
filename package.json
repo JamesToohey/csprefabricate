@@ -10,18 +10,18 @@
         "xss-protection",
         "typescript"
     ],
-    "homepage": "https://github.com/jamestoohey/csprefabricate#readme",
+    "homepage": "https://github.com/JamesToohey/csprefabricate#readme",
     "bugs": {
-        "url": "https://github.com/jamestoohey/csprefabricate/issues"
+        "url": "https://github.com/JamesToohey/csprefabricate/issues"
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/jamestoohey/csprefabricate.git"
+        "url": "git+https://github.com/JamesToohey/csprefabricate.git"
     },
     "license": "MIT",
     "author": {
         "name": "James Toohey",
-        "url": "https://github.com/jamestoohey"
+        "url": "https://github.com/JamesToohey"
     },
     "packageManager": "yarn@4.12.0",
     "exports": {
