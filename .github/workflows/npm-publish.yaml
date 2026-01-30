@@ -1,9 +1,5 @@
 name: npm-publish
 
-permissions:
-  id-token: write  # Required for OIDC
-  contents: read
-
 on:
   release:
     types: [published]
@@ -12,8 +8,8 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
-      id-token: write
+      contents: read
+      id-token: write # Required for OIDC handshake
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -22,4 +18,8 @@ jobs:
           cache: 'yarn'
       - run: yarn --immutable
       - run: yarn build
-      - run: npm publish --access public --non-interactive
+      - name: Publish to npm
+        run: npm publish --provenance --access public
+        env:
+          # Explicitly clearing this ensures npm doesn't look for a legacy token
+          NODE_AUTH_TOKEN: ""
