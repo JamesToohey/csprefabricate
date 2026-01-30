@@ -23,4 +23,5 @@ jobs:
       - run: yarn --immutable
       - run: yarn build
       - name: Publish to npm
-        run: npm publish --provenance --access public
+        run: npm publish --access public
+
