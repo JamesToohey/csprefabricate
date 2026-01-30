@@ -16,10 +16,8 @@ jobs:
         with:
           node-version: 20
           cache: 'yarn'
+          registry-url: 'https://registry.npmjs.org'
       - run: yarn --immutable
       - run: yarn build
       - name: Publish to npm
         run: npm publish --provenance --access public
-        env:
-          # Explicitly clearing this ensures npm doesn't look for a legacy token
-          NODE_AUTH_TOKEN: ""
