@@ -17,6 +17,7 @@ jobs:
         with:
           node-version: 20
           cache: 'yarn'
+      - run: echo "registry=https://registry.npmjs.org/" > .npmrc
       - run: yarn --immutable
       - run: yarn build
       - name: Publish to npm
