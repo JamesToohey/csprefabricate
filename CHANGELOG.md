@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.4](https://github.com/JamesToohey/csprefabricate/compare/v2.0.3...v2.0.4) (2026-01-30)
+
+
+### Bug Fixes
+
+* **deps:** bump tar from 7.5.6 to 7.5.7 ([#42](https://github.com/JamesToohey/csprefabricate/issues/42)) ([5acbe2a](https://github.com/JamesToohey/csprefabricate/commit/5acbe2a8948934e46df8b2ef630cdacbcb336297))
+
 ## [2.0.3](https://github.com/JamesToohey/csprefabricate/compare/v2.0.2...v2.0.3) (2026-01-22)
 
 
