@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.5](https://github.com/JamesToohey/csprefabricate/compare/v2.0.4...v2.0.5) (2026-01-30)
+
+
+### Bug Fixes
+
+* **ci/cd:** fix npm auth ([#45](https://github.com/JamesToohey/csprefabricate/issues/45)) ([69d60f0](https://github.com/JamesToohey/csprefabricate/commit/69d60f07b1a5f8120bf26b8571c41ee668820970))
+
 ## [2.0.4](https://github.com/JamesToohey/csprefabricate/compare/v2.0.3...v2.0.4) (2026-01-30)
 
 
