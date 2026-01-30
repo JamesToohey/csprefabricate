@@ -24,5 +24,3 @@ jobs:
       - run: yarn --immutable
       - run: yarn build
       - run: npm publish --access public --non-interactive
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
