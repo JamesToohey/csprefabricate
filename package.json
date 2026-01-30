@@ -18,6 +18,9 @@
         "type": "git",
         "url": "git+https://github.com/jamestoohey/csprefabricate.git"
     },
+    "publishConfig": {
+        "provenance": true
+    },
     "license": "MIT",
     "author": {
         "name": "James Toohey",
