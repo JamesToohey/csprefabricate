@@ -23,6 +23,12 @@
         "name": "James Toohey",
         "url": "https://github.com/JamesToohey"
     },
+    "funding": {
+        "type": "github",
+        "url": "https://github.com/sponsors/JamesToohey"
+    },
+    "type": "commonjs",
+    "sideEffects": false,
     "packageManager": "yarn@4.12.0",
     "exports": {
         ".": {
