@@ -160,10 +160,7 @@ void describe("Utils tests", () => {
                     "wasm-unsafe-eval",
                     "trusted-types-eval",
                 ],
-                [Directive.STYLE_SRC_ATTR]: [
-                    "unsafe-inline",
-                    "report-sample",
-                ],
+                [Directive.STYLE_SRC_ATTR]: ["unsafe-inline", "report-sample"],
                 [Directive.WEBRTC]: ["self"],
                 [Directive.SCRIPT_SRC]: [
                     "inline-speculation-rules",

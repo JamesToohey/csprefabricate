@@ -48,18 +48,9 @@ void describe("Helpers tests", () => {
                 `'trusted-types-eval'`,
             );
             assert.strictEqual(formatRule("report-sample"), `'report-sample'`);
-            assert.strictEqual(
-                formatRule("report-sha256"),
-                `'report-sha256'`,
-            );
-            assert.strictEqual(
-                formatRule("report-sha384"),
-                `'report-sha384'`,
-            );
-            assert.strictEqual(
-                formatRule("report-sha512"),
-                `'report-sha512'`,
-            );
+            assert.strictEqual(formatRule("report-sha256"), `'report-sha256'`);
+            assert.strictEqual(formatRule("report-sha384"), `'report-sha384'`);
+            assert.strictEqual(formatRule("report-sha512"), `'report-sha512'`);
             assert.strictEqual(
                 formatRule("unsafe-webtransport-hashes"),
                 `'unsafe-webtransport-hashes'`,
