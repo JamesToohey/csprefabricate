@@ -60,4 +60,11 @@ interface ContentSecurityPolicy {
 type CSPDirective = Directive;
 type CSP = ContentSecurityPolicy;
 
-export {ContentSecurityPolicy, Rules, Directive, BasicDirectiveRule, CSPDirective, CSP};
+export {
+    ContentSecurityPolicy,
+    Rules,
+    Directive,
+    BasicDirectiveRule,
+    CSPDirective,
+    CSP,
+};
