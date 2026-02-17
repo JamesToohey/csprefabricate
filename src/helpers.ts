@@ -6,6 +6,7 @@ export interface WarningOptions {
     unsafeInline?: boolean;
     missingNonceOrHash?: boolean;
     dataUri?: boolean;
+    deprecatedDirectives?: boolean;
 }
 
 const DEFAULT_WARNINGS: Required<WarningOptions> = {
@@ -14,6 +15,7 @@ const DEFAULT_WARNINGS: Required<WarningOptions> = {
     unsafeInline: true,
     missingNonceOrHash: true,
     dataUri: true,
+    deprecatedDirectives: true,
 };
 
 const validDirectives = [
@@ -42,6 +44,11 @@ const validDirectives = [
     "trusted-types",
     "upgrade-insecure-requests",
     "block-all-mixed-content",
+    "script-src-elem",
+    "script-src-attr",
+    "style-src-elem",
+    "style-src-attr",
+    "webrtc",
 ];
 
 const specialRules = [
@@ -51,6 +58,15 @@ const specialRules = [
     "unsafe-eval",
     "strict-dynamic",
     "unsafe-hashes",
+    "wasm-unsafe-eval",
+    "inline-speculation-rules",
+    "unsafe-allow-redirects",
+    "trusted-types-eval",
+    "report-sample",
+    "report-sha256",
+    "report-sha384",
+    "report-sha512",
+    "unsafe-webtransport-hashes",
 ];
 
 export function warnOnCspIssues(
@@ -130,6 +146,25 @@ export function warnOnCspIssues(
                 );
             }
         });
+    }
+
+    // 6. Deprecated directives
+    if (options.deprecatedDirectives) {
+        if (Directive.PLUGIN_TYPES in csp) {
+            console.warn(
+                `[CSPrefabricate] Directive 'plugin-types' is deprecated and may be removed in future CSP versions. This directive was never widely supported.`,
+            );
+        }
+        if (Directive.REPORT_URI in csp) {
+            console.warn(
+                `[CSPrefabricate] Directive 'report-uri' is deprecated and may be removed in future CSP versions. Use 'report-to' instead.`,
+            );
+        }
+        if (Directive.BLOCK_ALL_MIXED_CONTENT in csp) {
+            console.warn(
+                `[CSPrefabricate] Directive 'block-all-mixed-content' is deprecated and may be removed in future CSP versions. Use 'upgrade-insecure-requests' instead.`,
+            );
+        }
     }
 }
 

@@ -24,6 +24,11 @@ enum Directive {
     TRUSTED_TYPES = "trusted-types",
     UPGRADE_INSECURE_REQUESTS = "upgrade-insecure-requests",
     BLOCK_ALL_MIXED_CONTENT = "block-all-mixed-content",
+    SCRIPT_SRC_ELEM = "script-src-elem",
+    SCRIPT_SRC_ATTR = "script-src-attr",
+    STYLE_SRC_ELEM = "style-src-elem",
+    STYLE_SRC_ATTR = "style-src-attr",
+    WEBRTC = "webrtc",
 }
 
 type BasicDirectiveRule = Array<string | Record<string, Array<string>>>;
@@ -55,6 +60,11 @@ interface ContentSecurityPolicy {
     [Directive.TRUSTED_TYPES]?: BasicDirectiveRule;
     [Directive.UPGRADE_INSECURE_REQUESTS]?: BlankDirectiveRule;
     [Directive.BLOCK_ALL_MIXED_CONTENT]?: BlankDirectiveRule;
+    [Directive.SCRIPT_SRC_ELEM]?: BasicDirectiveRule;
+    [Directive.SCRIPT_SRC_ATTR]?: BasicDirectiveRule;
+    [Directive.STYLE_SRC_ELEM]?: BasicDirectiveRule;
+    [Directive.STYLE_SRC_ATTR]?: BasicDirectiveRule;
+    [Directive.WEBRTC]?: BasicDirectiveRule;
 }
 
 export {ContentSecurityPolicy, Rules, Directive, BasicDirectiveRule};
