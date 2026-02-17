@@ -172,8 +172,6 @@ Some CSP directives have been deprecated in favor of newer alternatives. `cspref
 
 These directives are still functional but may be removed from future CSP specifications. You can disable these warnings by setting `deprecatedDirectives: false` in your `WarningOptions`.
 
-```
-
 ## Baseline Recommended CSPs
 
 You can quickly generate a recommended Content Security Policy for common use cases using built-in baselines.
