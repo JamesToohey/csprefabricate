@@ -67,4 +67,14 @@ interface ContentSecurityPolicy {
     [Directive.WEBRTC]?: BasicDirectiveRule;
 }
 
-export {ContentSecurityPolicy, Rules, Directive, BasicDirectiveRule};
+type CSPDirective = Directive;
+type CSP = ContentSecurityPolicy;
+
+export {
+    ContentSecurityPolicy,
+    Rules,
+    Directive,
+    BasicDirectiveRule,
+    CSPDirective,
+    CSP,
+};

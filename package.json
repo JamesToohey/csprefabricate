@@ -47,6 +47,8 @@
     ],
     "scripts": {
         "build": "tsc --project tsconfig.build.json",
+        "format": "prettier --write .",
+        "format:check": "prettier --check .",
         "functional-test": "yarn build && tsx --test src/test/functional/functional.test.js",
         "lint": "eslint .",
         "pack": "npm pack",
