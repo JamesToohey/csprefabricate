@@ -192,4 +192,4 @@ Allow Google Analytics and Tag Manager:
 import {create, Baseline} from "csprefabricate";
 
 const cspString = create(Baseline.GOOGLE_ANALYTICS_CSP);
-````
+```
