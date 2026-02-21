@@ -7,6 +7,7 @@ export interface WarningOptions {
     missingNonceOrHash?: boolean;
     dataUri?: boolean;
     deprecatedDirectives?: boolean;
+    conflictingDirectives?: boolean;
 }
 
 const DEFAULT_WARNINGS: Required<WarningOptions> = {
@@ -16,6 +17,7 @@ const DEFAULT_WARNINGS: Required<WarningOptions> = {
     missingNonceOrHash: true,
     dataUri: true,
     deprecatedDirectives: true,
+    conflictingDirectives: true,
 };
 
 const validDirectives = [
@@ -175,6 +177,19 @@ export function warnOnCspIssues(
                 `[CSPrefabricate] Directive 'block-all-mixed-content' is deprecated and may be removed in future CSP versions. Use 'upgrade-insecure-requests' instead.`,
             );
         }
+    }
+
+    // 7. Conflicting directives
+    if (options.conflictingDirectives) {
+        Object.entries(csp).forEach(([directive, rules]) => {
+            if (Array.isArray(rules) && rules.length > 1) {
+                if (rules.includes("none") || rules.includes("'none'")) {
+                    console.warn(
+                        `[CSPrefabricate] Conflicting directives: 'none' is used alongside other sources in ${directive}. 'none' will be ignored by browsers.`,
+                    );
+                }
+            }
+        });
     }
 }
 

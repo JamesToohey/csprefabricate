@@ -35,10 +35,10 @@ void describe("README Code Examples", () => {
         const cspString = create(csp);
         assert.ok(
             cspString.includes(
-                "img-src 'self' *.example.com *.example.co.uk *.example.net;",
+                "img-src 'self' *.example.co.uk *.example.com *.example.net;",
             ) ||
                 cspString.includes(
-                    "img-src 'self' *.example.com *.example.co.uk *.example.net",
+                    "img-src 'self' *.example.co.uk *.example.com *.example.net",
                 ),
         );
     });

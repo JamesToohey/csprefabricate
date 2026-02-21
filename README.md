@@ -13,11 +13,15 @@ This project aims to make creating useful and secure CSPs a more pleasant experi
 Currently `csprefabricate`:
 
 - Validates directive names
+- Validates nonce and hash formats
+- Prevents CSP injection by sanitizing inputs
+- Deterministically sorts directives and rules for consistent output
 - Supports CSP Level 3 directives (`script-src-elem`, `script-src-attr`, `style-src-elem`, `style-src-attr`, `webrtc`)
 - Supports CSP Level 3 keyword sources (`'wasm-unsafe-eval'`, `'inline-speculation-rules'`, `'unsafe-allow-redirects'`, `'trusted-types-eval'`, `'report-sample'`, `'report-sha256'`, `'report-sha384'`, `'report-sha512'`, `'unsafe-webtransport-hashes'`)
 - Supports providing a list of TLDs for a given domain name
 - Provides warnings for insecure or incomplete CSP configurations, with options to disable specific warnings
 - Warns about deprecated directives (`plugin-types`, `report-uri`, `block-all-mixed-content`)
+- Warns about conflicting directives (e.g. `'none'` with other sources)
 
 ## Common CSP Issues
 
@@ -27,8 +31,10 @@ By default, `csprefabricate` will warn you about common CSP issues, such as:
 - Missing recommended directives (i.e. `object-src`, `base-uri`, `form-action`)
 - Use of `'unsafe-inline'` in `script-src`, even if nonces or hashes are present
 - Missing nonces or hashes when using `'unsafe-inline'` in `script-src`
+- Invalid nonce or hash formats
 - Allowing `data:` in `img-src` or `media-src`
 - Use of deprecated directives (`plugin-types`, `report-uri`, `block-all-mixed-content`)
+- Conflicting directives (e.g. `'none'` with other sources)
 
 You can control which warnings are shown by passing an optional `WarningOptions` object to the `create` function:
 
@@ -53,6 +59,7 @@ const warningOptions: WarningOptions = {
     missingNonceOrHash: false,
     dataUri: false,
     deprecatedDirectives: false,
+    conflictingDirectives: false,
 };
 
 create(csp, warningOptions);
@@ -78,7 +85,7 @@ const csp: ContentSecurityPolicy = {
 };
 
 const cspString = create(csp);
-// "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';"
+// "base-uri 'self'; default-src 'self'; form-action 'self'; img-src 'self'; object-src 'none'; script-src 'self'; style-src 'self';"
 ```
 
 ### Example 2: Allowing Google Analytics
@@ -107,7 +114,7 @@ const csp: ContentSecurityPolicy = {
 };
 
 const cspString = create(csp);
-// "default-src 'self'; script-src 'self' *.googletagmanager.com; style-src 'self'; img-src 'self' https://*.google-analytics.com https://*.googletagmanager.com; object-src 'none'; base-uri 'self'; form-action 'self'; connect-src 'self' https://*.google-analytics.com https://*.analytics.google.com https://*.googletagmanager.com;"
+// "base-uri 'self'; connect-src 'self' https://*.analytics.google.com https://*.google-analytics.com https://*.googletagmanager.com; default-src 'self'; form-action 'self'; img-src 'self' https://*.google-analytics.com https://*.googletagmanager.com; object-src 'none'; script-src 'self' *.googletagmanager.com; style-src 'self';"
 ```
 
 ### Example 3: Using TLD Expansion for Multiple Domains
@@ -120,7 +127,7 @@ const csp: ContentSecurityPolicy = {
 };
 
 const cspString = create(csp);
-// "img-src 'self' *.example.com *.example.co.uk *.example.net;"
+// "img-src 'self' *.example.co.uk *.example.com *.example.net;"
 ```
 
 ### Example 4: Using CSP Level 3 Directives and Keywords
@@ -147,7 +154,7 @@ const csp: ContentSecurityPolicy = {
 };
 
 const cspString = create(csp);
-// "default-src 'self'; script-src-elem 'self' https://cdn.example.com; script-src-attr 'none'; style-src-elem 'self'; style-src-attr 'unsafe-inline'; script-src 'self' 'wasm-unsafe-eval'; webrtc 'allow'; object-src 'none'; base-uri 'self';"
+// "base-uri 'self'; default-src 'self'; object-src 'none'; script-src 'self' 'wasm-unsafe-eval'; script-src-attr 'none'; script-src-elem 'self' https://cdn.example.com; style-src-attr 'unsafe-inline'; style-src-elem 'self'; webrtc 'allow';"
 ```
 
 #### CSP Level 3 Keyword Sources
