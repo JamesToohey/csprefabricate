@@ -131,19 +131,19 @@ CSP Level 3 introduced more granular control over scripts and styles, plus new k
 import {create, Directive, ContentSecurityPolicy} from "csprefabricate";
 
 const csp: ContentSecurityPolicy = {
-    [Directive.DEFAULT_SRC]: ["'self'"],
+    [Directive.DEFAULT_SRC]: ["self"],
     // Control <script> elements separately from inline event handlers
-    [Directive.SCRIPT_SRC_ELEM]: ["'self'", "https://cdn.example.com"],
-    [Directive.SCRIPT_SRC_ATTR]: ["'none'"],
+    [Directive.SCRIPT_SRC_ELEM]: ["self", "https://cdn.example.com"],
+    [Directive.SCRIPT_SRC_ATTR]: ["none"],
     // Control <style> elements separately from inline styles
-    [Directive.STYLE_SRC_ELEM]: ["'self'"],
-    [Directive.STYLE_SRC_ATTR]: ["'unsafe-inline'"],
+    [Directive.STYLE_SRC_ELEM]: ["self"],
+    [Directive.STYLE_SRC_ATTR]: ["unsafe-inline"],
     // Allow WebAssembly compilation (but not eval)
-    [Directive.SCRIPT_SRC]: ["'self'", "'wasm-unsafe-eval'"],
+    [Directive.SCRIPT_SRC]: ["self", "wasm-unsafe-eval"],
     // Control WebRTC connections
-    [Directive.WEBRTC]: ["'allow'"],
-    [Directive.OBJECT_SRC]: ["'none'"],
-    [Directive.BASE_URI]: ["'self'"],
+    [Directive.WEBRTC]: ["allow"],
+    [Directive.OBJECT_SRC]: ["none"],
+    [Directive.BASE_URI]: ["self"],
 };
 
 const cspString = create(csp);
