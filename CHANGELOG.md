@@ -1,5 +1,13 @@
 # Changelog
 
+## [2.1.0](https://github.com/JamesToohey/csprefabricate/compare/v2.0.22...v2.1.0) (2026-02-21)
+
+
+### Features
+
+* Add CSP Level 3 directives and deprecation warnings ([#68](https://github.com/JamesToohey/csprefabricate/issues/68)) ([35e91fa](https://github.com/JamesToohey/csprefabricate/commit/35e91fa51374794dc6a6cb5d661fb39558605ba8))
+* Improve exposed types ([#66](https://github.com/JamesToohey/csprefabricate/issues/66)) ([71028e2](https://github.com/JamesToohey/csprefabricate/commit/71028e293673353b1b966fd9acf0c59c15b54383))
+
 ## [2.0.22](https://github.com/JamesToohey/csprefabricate/compare/v2.0.21...v2.0.22) (2026-01-30)
 
 
