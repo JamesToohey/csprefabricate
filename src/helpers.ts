@@ -81,12 +81,14 @@ export function warnOnCspIssues(
 
     // 1. Overly permissive: * in script-src, style-src, etc.
     if (options.overlyPermissive) {
-        ([
-            Directive.SCRIPT_SRC,
-            Directive.STYLE_SRC,
-            Directive.IMG_SRC,
-            Directive.CONNECT_SRC,
-        ] as const).forEach((directive) => {
+        (
+            [
+                Directive.SCRIPT_SRC,
+                Directive.STYLE_SRC,
+                Directive.IMG_SRC,
+                Directive.CONNECT_SRC,
+            ] as const
+        ).forEach((directive) => {
             const rules = csp[directive];
             if (Array.isArray(rules) && rules.includes("*")) {
                 console.warn(
@@ -117,11 +119,12 @@ export function warnOnCspIssues(
             (directive) => {
                 const rules = csp[directive];
                 if (Array.isArray(rules) && rules.includes("'unsafe-inline'")) {
-                console.warn(
-                    `[CSPrefabricate] 'unsafe-inline' found in ${directive}`,
-                );
-            }
-        });
+                    console.warn(
+                        `[CSPrefabricate] 'unsafe-inline' found in ${directive}`,
+                    );
+                }
+            },
+        );
     }
 
     // 4. Missing nonce or hash in script-src if 'unsafe-inline' is present
@@ -147,11 +150,12 @@ export function warnOnCspIssues(
             (directive) => {
                 const rules = csp[directive];
                 if (Array.isArray(rules) && rules.includes("data:")) {
-                console.warn(
-                    `[CSPrefabricate] 'data:' allowed in ${directive}`,
-                );
-            }
-        });
+                    console.warn(
+                        `[CSPrefabricate] 'data:' allowed in ${directive}`,
+                    );
+                }
+            },
+        );
     }
 
     // 6. Deprecated directives
