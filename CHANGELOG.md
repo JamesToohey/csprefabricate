@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.1](https://github.com/JamesToohey/csprefabricate/compare/v2.1.0...v2.1.1) (2026-02-21)
+
+
+### Bug Fixes
+
+* Update npm-publish.yaml to fix OIDC error ([#72](https://github.com/JamesToohey/csprefabricate/issues/72)) ([7f77e3b](https://github.com/JamesToohey/csprefabricate/commit/7f77e3b4d7b8447b79d927d521f8d1042ec83655))
+
 ## [2.1.0](https://github.com/JamesToohey/csprefabricate/compare/v2.0.22...v2.1.0) (2026-02-21)
 
 
