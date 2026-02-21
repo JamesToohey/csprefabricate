@@ -67,6 +67,8 @@ const specialRules = [
     "report-sha384",
     "report-sha512",
     "unsafe-webtransport-hashes",
+    "allow",
+    "block",
 ];
 
 export function warnOnCspIssues(
@@ -77,12 +79,12 @@ export function warnOnCspIssues(
 
     // 1. Overly permissive: * in script-src, style-src, etc.
     if (options.overlyPermissive) {
-        [
+        ([
             Directive.SCRIPT_SRC,
             Directive.STYLE_SRC,
             Directive.IMG_SRC,
             Directive.CONNECT_SRC,
-        ].forEach((directive) => {
+        ] as const).forEach((directive) => {
             const rules = csp[directive];
             if (Array.isArray(rules) && rules.includes("*")) {
                 console.warn(
@@ -109,9 +111,10 @@ export function warnOnCspIssues(
 
     // 3. Unsafe inline
     if (options.unsafeInline) {
-        [Directive.SCRIPT_SRC, Directive.STYLE_SRC].forEach((directive) => {
-            const rules = csp[directive];
-            if (Array.isArray(rules) && rules.includes("'unsafe-inline'")) {
+        ([Directive.SCRIPT_SRC, Directive.STYLE_SRC] as const).forEach(
+            (directive) => {
+                const rules = csp[directive];
+                if (Array.isArray(rules) && rules.includes("'unsafe-inline'")) {
                 console.warn(
                     `[CSPrefabricate] 'unsafe-inline' found in ${directive}`,
                 );
@@ -138,9 +141,10 @@ export function warnOnCspIssues(
 
     // 5. Permitting data: in img-src or media-src
     if (options.dataUri) {
-        [Directive.IMG_SRC, Directive.MEDIA_SRC].forEach((directive) => {
-            const rules = csp[directive];
-            if (Array.isArray(rules) && rules.includes("data:")) {
+        ([Directive.IMG_SRC, Directive.MEDIA_SRC] as const).forEach(
+            (directive) => {
+                const rules = csp[directive];
+                if (Array.isArray(rules) && rules.includes("data:")) {
                 console.warn(
                     `[CSPrefabricate] 'data:' allowed in ${directive}`,
                 );

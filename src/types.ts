@@ -33,7 +33,8 @@ enum Directive {
 
 type BasicDirectiveRule = Array<string | Record<string, Array<string>>>;
 type BlankDirectiveRule = null;
-type Rules = BasicDirectiveRule | BlankDirectiveRule;
+type AllowBlockRule = Array<"allow" | "block">;
+type Rules = BasicDirectiveRule | BlankDirectiveRule | AllowBlockRule;
 interface ContentSecurityPolicy {
     [Directive.DEFAULT_SRC]?: BasicDirectiveRule;
     [Directive.SCRIPT_SRC]?: BasicDirectiveRule;
@@ -64,7 +65,7 @@ interface ContentSecurityPolicy {
     [Directive.SCRIPT_SRC_ATTR]?: BasicDirectiveRule;
     [Directive.STYLE_SRC_ELEM]?: BasicDirectiveRule;
     [Directive.STYLE_SRC_ATTR]?: BasicDirectiveRule;
-    [Directive.WEBRTC]?: BasicDirectiveRule;
+    [Directive.WEBRTC]?: AllowBlockRule;
 }
 
 type CSPDirective = Directive;
@@ -75,6 +76,8 @@ export {
     Rules,
     Directive,
     BasicDirectiveRule,
+    BlankDirectiveRule,
+    AllowBlockRule,
     CSPDirective,
     CSP,
 };

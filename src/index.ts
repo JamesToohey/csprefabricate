@@ -8,6 +8,8 @@ export type {
     ContentSecurityPolicy,
     Rules,
     BasicDirectiveRule,
+    BlankDirectiveRule,
+    AllowBlockRule,
     CSPDirective,
     CSP,
 } from "./types";

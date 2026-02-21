@@ -68,13 +68,13 @@ void describe("Utils tests", () => {
                 [Directive.SCRIPT_SRC_ATTR]: ["none"],
                 [Directive.STYLE_SRC_ELEM]: ["self", "styles.example.com"],
                 [Directive.STYLE_SRC_ATTR]: ["self"],
-                [Directive.WEBRTC]: ["self"],
+                [Directive.WEBRTC]: ["allow"],
             };
 
             const cspString = create(csp);
             assert.strictEqual(
                 cspString,
-                "default-src 'self'; script-src 'self' js.example.com; style-src 'self' css.example.com; img-src 'self' *.google.com *.google.com.au; connect-src 'self'; font-src 'self' font.example.com; object-src 'none'; media-src 'self' media.example.com; frame-src 'self'; sandbox allow-scripts; report-uri /my-report-uri; child-src 'self'; form-action 'self'; frame-ancestors 'none'; plugin-types application/pdf; base-uri 'self'; report-to myGroupName; worker-src 'none'; manifest-src 'none'; prefetch-src 'none'; navigate-to example.com; require-trusted-types-for script; trusted-types 'none'; upgrade-insecure-requests; block-all-mixed-content; script-src-elem 'self' scripts.example.com; script-src-attr 'none'; style-src-elem 'self' styles.example.com; style-src-attr 'self'; webrtc 'self';",
+                "default-src 'self'; script-src 'self' js.example.com; style-src 'self' css.example.com; img-src 'self' *.google.com *.google.com.au; connect-src 'self'; font-src 'self' font.example.com; object-src 'none'; media-src 'self' media.example.com; frame-src 'self'; sandbox allow-scripts; report-uri /my-report-uri; child-src 'self'; form-action 'self'; frame-ancestors 'none'; plugin-types application/pdf; base-uri 'self'; report-to myGroupName; worker-src 'none'; manifest-src 'none'; prefetch-src 'none'; navigate-to example.com; require-trusted-types-for script; trusted-types 'none'; upgrade-insecure-requests; block-all-mixed-content; script-src-elem 'self' scripts.example.com; script-src-attr 'none'; style-src-elem 'self' styles.example.com; style-src-attr 'self'; webrtc 'allow';",
             );
         });
 
@@ -161,7 +161,7 @@ void describe("Utils tests", () => {
                     "trusted-types-eval",
                 ],
                 [Directive.STYLE_SRC_ATTR]: ["unsafe-inline", "report-sample"],
-                [Directive.WEBRTC]: ["self"],
+                [Directive.WEBRTC]: ["block"],
                 [Directive.SCRIPT_SRC]: [
                     "inline-speculation-rules",
                     "unsafe-allow-redirects",
@@ -174,7 +174,7 @@ void describe("Utils tests", () => {
             const cspString = create(csp);
             assert.strictEqual(
                 cspString,
-                "script-src-elem 'self' scripts.example.com; script-src-attr 'none'; style-src-elem 'self' 'wasm-unsafe-eval' 'trusted-types-eval'; style-src-attr 'unsafe-inline' 'report-sample'; webrtc 'self'; script-src 'inline-speculation-rules' 'unsafe-allow-redirects' 'report-sha256' 'report-sha384' 'report-sha512' 'unsafe-webtransport-hashes';",
+                "script-src-elem 'self' scripts.example.com; script-src-attr 'none'; style-src-elem 'self' 'wasm-unsafe-eval' 'trusted-types-eval'; style-src-attr 'unsafe-inline' 'report-sample'; webrtc 'block'; script-src 'inline-speculation-rules' 'unsafe-allow-redirects' 'report-sha256' 'report-sha384' 'report-sha512' 'unsafe-webtransport-hashes';",
             );
         });
 
