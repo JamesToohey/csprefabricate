@@ -10,6 +10,7 @@ export type {
     BasicDirectiveRule,
     BlankDirectiveRule,
     AllowBlockRule,
+    RequireTrustedTypesForRule,
     CSPDirective,
     CSP,
 } from "./types";

@@ -49,6 +49,7 @@ const validDirectives = [
     "style-src-elem",
     "style-src-attr",
     "webrtc",
+    "fenced-frame-src",
 ];
 
 const specialRules = [
@@ -69,6 +70,7 @@ const specialRules = [
     "unsafe-webtransport-hashes",
     "allow",
     "block",
+    "script",
 ];
 
 export function warnOnCspIssues(
