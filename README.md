@@ -14,7 +14,7 @@ Currently `csprefabricate`:
 
 - Validates directive names
 - Validates nonce and hash formats
-- Prevents CSP injection by sanitizing inputs
+- Prevents CSP injection by sanitising inputs
 - Deterministically sorts directives and rules for consistent output
 - Supports CSP Level 3 directives (`script-src-elem`, `script-src-attr`, `style-src-elem`, `style-src-attr`, `webrtc`)
 - Supports CSP Level 3 keyword sources (`'wasm-unsafe-eval'`, `'inline-speculation-rules'`, `'unsafe-allow-redirects'`, `'trusted-types-eval'`, `'report-sample'`, `'report-sha256'`, `'report-sha384'`, `'report-sha512'`, `'unsafe-webtransport-hashes'`)

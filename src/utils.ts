@@ -11,6 +11,11 @@ import {
     BasicDirectiveRule,
 } from "./types";
 
+const NONCE_REGEX = /^'nonce-[a-zA-Z0-9+/_-]+={0,2}'$/;
+const HASH_REGEX = /^'(sha256|sha384|sha512)-[a-zA-Z0-9+/_-]+={0,2}'$/;
+const NONCE_PREFIXES = ["'nonce-", "nonce-"];
+const HASH_PREFIXES = ["'sha", "sha256-", "sha384-", "sha512-"];
+
 export const processRules = (rules: BasicDirectiveRule): string => {
     // Flatten and deduplicate rules
     const seen = new Set<string>();
@@ -36,30 +41,23 @@ export const processRules = (rules: BasicDirectiveRule): string => {
             }
 
             // Validate nonces and hashes
-            if (
-                formatted.startsWith("'nonce-") ||
-                formatted.startsWith("nonce-") ||
-                formatted.startsWith("'sha") ||
-                formatted.startsWith("sha256-") ||
-                formatted.startsWith("sha384-") ||
-                formatted.startsWith("sha512-")
-            ) {
-                const nonceRegex = /^'nonce-[a-zA-Z0-9+/_-]+={0,2}'$/;
-                const hashRegex =
-                    /^'(sha256|sha384|sha512)-[a-zA-Z0-9+/_-]+={0,2}'$/;
+            const isNonce = NONCE_PREFIXES.some((prefix) =>
+                formatted.startsWith(prefix),
+            );
+            const isHash = HASH_PREFIXES.some((prefix) =>
+                formatted.startsWith(prefix),
+            );
 
-                if (
-                    formatted.startsWith("'nonce-") ||
-                    formatted.startsWith("nonce-")
-                ) {
-                    if (!nonceRegex.test(formatted)) {
+            if (isNonce || isHash) {
+                if (isNonce) {
+                    if (!NONCE_REGEX.test(formatted)) {
                         console.warn(
                             `[CSPrefabricate] Invalid nonce format: ${formatted}. Rule dropped.`,
                         );
                         continue;
                     }
                 } else {
-                    if (!hashRegex.test(formatted)) {
+                    if (!HASH_REGEX.test(formatted)) {
                         console.warn(
                             `[CSPrefabricate] Invalid hash format: ${formatted}. Rule dropped.`,
                         );
