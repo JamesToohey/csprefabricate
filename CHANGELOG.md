@@ -1,5 +1,20 @@
 # Changelog
 
+## [2.1.1](https://github.com/JamesToohey/csprefabricate/compare/v2.1.0...v2.1.1) (2026-02-21)
+
+
+### Bug Fixes
+
+* Update npm-publish.yaml to fix OIDC error ([#72](https://github.com/JamesToohey/csprefabricate/issues/72)) ([7f77e3b](https://github.com/JamesToohey/csprefabricate/commit/7f77e3b4d7b8447b79d927d521f8d1042ec83655))
+
+## [2.1.0](https://github.com/JamesToohey/csprefabricate/compare/v2.0.22...v2.1.0) (2026-02-21)
+
+
+### Features
+
+* Add CSP Level 3 directives and deprecation warnings ([#68](https://github.com/JamesToohey/csprefabricate/issues/68)) ([35e91fa](https://github.com/JamesToohey/csprefabricate/commit/35e91fa51374794dc6a6cb5d661fb39558605ba8))
+* Improve exposed types ([#66](https://github.com/JamesToohey/csprefabricate/issues/66)) ([71028e2](https://github.com/JamesToohey/csprefabricate/commit/71028e293673353b1b966fd9acf0c59c15b54383))
+
 ## [2.0.22](https://github.com/JamesToohey/csprefabricate/compare/v2.0.21...v2.0.22) (2026-01-30)
 
 
