@@ -23,6 +23,38 @@ void describe("Helpers tests", () => {
     void describe("formatRule", () => {
         void it("Formats special rules with single quotes", () => {
             assert.strictEqual(formatRule("self"), `'self'`);
+            assert.strictEqual(formatRule("none"), `'none'`);
+            assert.strictEqual(formatRule("unsafe-inline"), `'unsafe-inline'`);
+            assert.strictEqual(formatRule("unsafe-eval"), `'unsafe-eval'`);
+            assert.strictEqual(
+                formatRule("strict-dynamic"),
+                `'strict-dynamic'`,
+            );
+            assert.strictEqual(formatRule("unsafe-hashes"), `'unsafe-hashes'`);
+            assert.strictEqual(
+                formatRule("wasm-unsafe-eval"),
+                `'wasm-unsafe-eval'`,
+            );
+            assert.strictEqual(
+                formatRule("inline-speculation-rules"),
+                `'inline-speculation-rules'`,
+            );
+            assert.strictEqual(
+                formatRule("unsafe-allow-redirects"),
+                `'unsafe-allow-redirects'`,
+            );
+            assert.strictEqual(
+                formatRule("trusted-types-eval"),
+                `'trusted-types-eval'`,
+            );
+            assert.strictEqual(formatRule("report-sample"), `'report-sample'`);
+            assert.strictEqual(formatRule("report-sha256"), `'report-sha256'`);
+            assert.strictEqual(formatRule("report-sha384"), `'report-sha384'`);
+            assert.strictEqual(formatRule("report-sha512"), `'report-sha512'`);
+            assert.strictEqual(
+                formatRule("unsafe-webtransport-hashes"),
+                `'unsafe-webtransport-hashes'`,
+            );
         });
 
         void it("Returns non-special rules", () => {
@@ -174,6 +206,87 @@ void describe("Helpers tests", () => {
                     w.includes("Missing recommended directive"),
                 ),
             );
+        });
+
+        void it("Warns on deprecated plugin-types directive", () => {
+            const csp: ContentSecurityPolicy = {
+                [Directive.PLUGIN_TYPES]: ["application/pdf"],
+            };
+            warnOnCspIssues(csp);
+            assert(
+                warnings.some((w) =>
+                    w.includes("Directive 'plugin-types' is deprecated"),
+                ),
+            );
+            assert(warnings.some((w) => w.includes("never widely supported")));
+        });
+
+        void it("Warns on deprecated report-uri directive", () => {
+            const csp: ContentSecurityPolicy = {
+                [Directive.REPORT_URI]: ["/report"],
+            };
+            warnOnCspIssues(csp);
+            assert(
+                warnings.some((w) =>
+                    w.includes("Directive 'report-uri' is deprecated"),
+                ),
+            );
+            assert(warnings.some((w) => w.includes("Use 'report-to' instead")));
+        });
+
+        void it("Warns on deprecated block-all-mixed-content directive", () => {
+            const csp: ContentSecurityPolicy = {
+                [Directive.BLOCK_ALL_MIXED_CONTENT]: null,
+            };
+            warnOnCspIssues(csp);
+            assert(
+                warnings.some((w) =>
+                    w.includes(
+                        "Directive 'block-all-mixed-content' is deprecated",
+                    ),
+                ),
+            );
+            assert(
+                warnings.some((w) =>
+                    w.includes("Use 'upgrade-insecure-requests' instead"),
+                ),
+            );
+        });
+
+        void it("Warns on multiple deprecated directives in one policy", () => {
+            const csp: ContentSecurityPolicy = {
+                [Directive.PLUGIN_TYPES]: ["application/pdf"],
+                [Directive.REPORT_URI]: ["/report"],
+                [Directive.BLOCK_ALL_MIXED_CONTENT]: null,
+            };
+            warnOnCspIssues(csp);
+            assert(
+                warnings.some((w) =>
+                    w.includes("'plugin-types' is deprecated"),
+                ),
+            );
+            assert(
+                warnings.some((w) => w.includes("'report-uri' is deprecated")),
+            );
+            assert(
+                warnings.some((w) =>
+                    w.includes("'block-all-mixed-content' is deprecated"),
+                ),
+            );
+            assert.strictEqual(
+                warnings.filter((w) => w.includes("deprecated")).length,
+                3,
+            );
+        });
+
+        void it("Respects deprecatedDirectives option to disable warnings", () => {
+            const csp: ContentSecurityPolicy = {
+                [Directive.PLUGIN_TYPES]: ["application/pdf"],
+                [Directive.REPORT_URI]: ["/report"],
+            };
+            const opts: WarningOptions = {deprecatedDirectives: false};
+            warnOnCspIssues(csp, opts);
+            assert(!warnings.some((w) => w.includes("deprecated")));
         });
     });
 });
