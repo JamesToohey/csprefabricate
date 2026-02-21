@@ -13,8 +13,11 @@ This project aims to make creating useful and secure CSPs a more pleasant experi
 Currently `csprefabricate`:
 
 - Validates directive names
+- Supports CSP Level 3 directives (`script-src-elem`, `script-src-attr`, `style-src-elem`, `style-src-attr`, `webrtc`)
+- Supports CSP Level 3 keyword sources (`'wasm-unsafe-eval'`, `'inline-speculation-rules'`, `'unsafe-allow-redirects'`, `'trusted-types-eval'`, `'report-sample'`, `'report-sha256'`, `'report-sha384'`, `'report-sha512'`, `'unsafe-webtransport-hashes'`)
 - Supports providing a list of TLDs for a given domain name
 - Provides warnings for insecure or incomplete CSP configurations, with options to disable specific warnings
+- Warns about deprecated directives (`plugin-types`, `report-uri`, `block-all-mixed-content`)
 
 ## Common CSP Issues
 
@@ -25,6 +28,7 @@ By default, `csprefabricate` will warn you about common CSP issues, such as:
 - Use of `'unsafe-inline'` in `script-src`, even if nonces or hashes are present
 - Missing nonces or hashes when using `'unsafe-inline'` in `script-src`
 - Allowing `data:` in `img-src` or `media-src`
+- Use of deprecated directives (`plugin-types`, `report-uri`, `block-all-mixed-content`)
 
 You can control which warnings are shown by passing an optional `WarningOptions` object to the `create` function:
 
@@ -48,6 +52,7 @@ const warningOptions: WarningOptions = {
     unsafeInline: false,
     missingNonceOrHash: false,
     dataUri: false,
+    deprecatedDirectives: false,
 };
 
 create(csp, warningOptions);
@@ -117,6 +122,55 @@ const csp: ContentSecurityPolicy = {
 const cspString = create(csp);
 // "img-src 'self' *.example.com *.example.co.uk *.example.net;"
 ```
+
+### Example 4: Using CSP Level 3 Directives and Keywords
+
+CSP Level 3 introduced more granular control over scripts and styles, plus new keyword sources:
+
+```typescript
+import {create, Directive, ContentSecurityPolicy} from "csprefabricate";
+
+const csp: ContentSecurityPolicy = {
+    [Directive.DEFAULT_SRC]: ["self"],
+    // Control <script> elements separately from inline event handlers
+    [Directive.SCRIPT_SRC_ELEM]: ["self", "https://cdn.example.com"],
+    [Directive.SCRIPT_SRC_ATTR]: ["none"],
+    // Control <style> elements separately from inline styles
+    [Directive.STYLE_SRC_ELEM]: ["self"],
+    [Directive.STYLE_SRC_ATTR]: ["unsafe-inline"],
+    // Allow WebAssembly compilation (but not eval)
+    [Directive.SCRIPT_SRC]: ["self", "wasm-unsafe-eval"],
+    // Control WebRTC connections
+    [Directive.WEBRTC]: ["allow"],
+    [Directive.OBJECT_SRC]: ["none"],
+    [Directive.BASE_URI]: ["self"],
+};
+
+const cspString = create(csp);
+// "default-src 'self'; script-src-elem 'self' https://cdn.example.com; script-src-attr 'none'; style-src-elem 'self'; style-src-attr 'unsafe-inline'; script-src 'self' 'wasm-unsafe-eval'; webrtc 'allow'; object-src 'none'; base-uri 'self';"
+```
+
+#### CSP Level 3 Keyword Sources
+
+CSP Level 3 introduces several new keyword sources that are automatically wrapped in single quotes:
+
+- **`'wasm-unsafe-eval'`** - Allows WebAssembly compilation without allowing JavaScript eval
+- **`'inline-speculation-rules'`** - Allows inline speculation rules for prefetching
+- **`'unsafe-allow-redirects'`** - Allows redirects in navigation (experimental)
+- **`'trusted-types-eval'`** - Allows eval when combined with Trusted Types
+- **`'report-sample'`** - Includes code samples in violation reports
+- **`'report-sha256'`, `'report-sha384'`, `'report-sha512'`** - Generates hash-based reports for subresources
+- **`'unsafe-webtransport-hashes'`** - Allows WebTransport connections with certificate hashes
+
+## Deprecated Directives
+
+Some CSP directives have been deprecated in favor of newer alternatives. `csprefabricate` will warn you when using these directives:
+
+- **`plugin-types`** - Never widely supported, scheduled for removal
+- **`report-uri`** - Use `report-to` instead
+- **`block-all-mixed-content`** - Use `upgrade-insecure-requests` instead
+
+These directives are still functional but may be removed from future CSP specifications. You can disable these warnings by setting `deprecatedDirectives: false` in your `WarningOptions`.
 
 ## Baseline Recommended CSPs
 
