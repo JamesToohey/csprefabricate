@@ -29,11 +29,18 @@ enum Directive {
     STYLE_SRC_ELEM = "style-src-elem",
     STYLE_SRC_ATTR = "style-src-attr",
     WEBRTC = "webrtc",
+    FENCED_FRAME_SRC = "fenced-frame-src",
 }
 
 type BasicDirectiveRule = Array<string | Record<string, Array<string>>>;
 type BlankDirectiveRule = null;
-type Rules = BasicDirectiveRule | BlankDirectiveRule;
+type AllowBlockRule = Array<"allow" | "block">;
+type RequireTrustedTypesForRule = ["script"];
+type Rules =
+    | BasicDirectiveRule
+    | BlankDirectiveRule
+    | AllowBlockRule
+    | RequireTrustedTypesForRule;
 interface ContentSecurityPolicy {
     [Directive.DEFAULT_SRC]?: BasicDirectiveRule;
     [Directive.SCRIPT_SRC]?: BasicDirectiveRule;
@@ -56,7 +63,7 @@ interface ContentSecurityPolicy {
     [Directive.MANIFEST_SRC]?: BasicDirectiveRule;
     [Directive.PREFETCH_SRC]?: BasicDirectiveRule;
     [Directive.NAVIGATE_TO]?: BasicDirectiveRule;
-    [Directive.REQUIRE_TRUSTED_TYPES_FOR]?: BasicDirectiveRule;
+    [Directive.REQUIRE_TRUSTED_TYPES_FOR]?: RequireTrustedTypesForRule;
     [Directive.TRUSTED_TYPES]?: BasicDirectiveRule;
     [Directive.UPGRADE_INSECURE_REQUESTS]?: BlankDirectiveRule;
     [Directive.BLOCK_ALL_MIXED_CONTENT]?: BlankDirectiveRule;
@@ -64,7 +71,8 @@ interface ContentSecurityPolicy {
     [Directive.SCRIPT_SRC_ATTR]?: BasicDirectiveRule;
     [Directive.STYLE_SRC_ELEM]?: BasicDirectiveRule;
     [Directive.STYLE_SRC_ATTR]?: BasicDirectiveRule;
-    [Directive.WEBRTC]?: BasicDirectiveRule;
+    [Directive.WEBRTC]?: AllowBlockRule;
+    [Directive.FENCED_FRAME_SRC]?: BasicDirectiveRule;
 }
 
 type CSPDirective = Directive;
@@ -75,6 +83,9 @@ export {
     Rules,
     Directive,
     BasicDirectiveRule,
+    BlankDirectiveRule,
+    AllowBlockRule,
+    RequireTrustedTypesForRule,
     CSPDirective,
     CSP,
 };
