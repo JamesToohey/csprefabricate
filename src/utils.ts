@@ -15,6 +15,9 @@ const NONCE_REGEX = /^'nonce-[a-zA-Z0-9+/_-]+={0,2}'$/;
 const HASH_REGEX = /^'(sha256|sha384|sha512)-[a-zA-Z0-9+/_-]+={0,2}'$/;
 const NONCE_PREFIXES = ["'nonce-", "nonce-"];
 const HASH_PREFIXES = ["'sha", "sha256-", "sha384-", "sha512-"];
+const INVALID_RULE_CHAR_REGEX = /[;,\r\n]|[\u0000-\u001F\u007F]/;
+const hasInvalidRuleChars = (rule: string): boolean =>
+    INVALID_RULE_CHAR_REGEX.test(rule);
 
 export const processRules = (rules: BasicDirectiveRule): string => {
     // Flatten and deduplicate rules
@@ -24,7 +27,7 @@ export const processRules = (rules: BasicDirectiveRule): string => {
             for (const [domain, tlds] of Object.entries(rule)) {
                 for (const tld of tlds) {
                     const combined = `${domain}${tld}`;
-                    if (combined.includes(";") || combined.includes(",")) {
+                    if (hasInvalidRuleChars(combined)) {
                         throw new Error(
                             `[CSPrefabricate] Invalid character in rule: ${combined}`,
                         );
@@ -34,7 +37,7 @@ export const processRules = (rules: BasicDirectiveRule): string => {
             }
         } else {
             const formatted = formatRule(rule);
-            if (formatted.includes(";") || formatted.includes(",")) {
+            if (hasInvalidRuleChars(formatted)) {
                 throw new Error(
                     `[CSPrefabricate] Invalid character in rule: ${formatted}`,
                 );

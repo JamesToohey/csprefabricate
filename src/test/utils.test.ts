@@ -210,7 +210,7 @@ void describe("Utils tests", () => {
             );
         });
 
-        void it("Throws an error on CSP injection attempts (semicolon or comma)", () => {
+        void it("Throws an error on CSP injection attempts and invalid control characters", () => {
             const csp1: ContentSecurityPolicy = {
                 [Directive.SCRIPT_SRC]: [
                     "self",
@@ -230,6 +230,16 @@ void describe("Utils tests", () => {
                 ],
             };
             assert.throws(() => create(csp3), /Invalid character in rule/);
+
+            const csp4: ContentSecurityPolicy = {
+                [Directive.SCRIPT_SRC]: ["self", "example.com\nobject-src 'none'"],
+            };
+            assert.throws(() => create(csp4), /Invalid character in rule/);
+
+            const csp5: ContentSecurityPolicy = {
+                [Directive.SCRIPT_SRC]: ["self", "example.com\u0000"],
+            };
+            assert.throws(() => create(csp5), /Invalid character in rule/);
         });
 
         void it("Validates nonces and drops invalid ones", () => {
