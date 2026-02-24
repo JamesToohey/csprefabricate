@@ -232,7 +232,10 @@ void describe("Utils tests", () => {
             assert.throws(() => create(csp3), /Invalid character in rule/);
 
             const csp4: ContentSecurityPolicy = {
-                [Directive.SCRIPT_SRC]: ["self", "example.com\nobject-src 'none'"],
+                [Directive.SCRIPT_SRC]: [
+                    "self",
+                    "example.com\nobject-src 'none'",
+                ],
             };
             assert.throws(() => create(csp4), /Invalid character in rule/);
 
