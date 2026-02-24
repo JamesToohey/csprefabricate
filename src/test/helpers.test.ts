@@ -289,4 +289,49 @@ void describe("Helpers tests", () => {
             assert(!warnings.some((w) => w.includes("deprecated")));
         });
     });
+
+    void describe("warnOnCspIssues - Conflicting Directives", () => {
+        let warnings: string[] = [];
+        const originalWarn = console.warn;
+
+        void beforeEach(() => {
+            warnings = [];
+            console.warn = (msg: string) => warnings.push(msg);
+        });
+
+        void after(() => {
+            console.warn = originalWarn;
+        });
+
+        void it("Warns when 'none' is used with other sources", () => {
+            const csp: ContentSecurityPolicy = {
+                [Directive.SCRIPT_SRC]: ["'none'", "self"],
+            };
+            warnOnCspIssues(csp);
+            assert(
+                warnings.some((w) =>
+                    w.includes(
+                        "Conflicting directives: 'none' is used alongside other sources in script-src",
+                    ),
+                ),
+            );
+        });
+
+        void it("Does not warn when 'none' is used alone", () => {
+            const csp: ContentSecurityPolicy = {
+                [Directive.SCRIPT_SRC]: ["'none'"],
+            };
+            warnOnCspIssues(csp);
+            assert(!warnings.some((w) => w.includes("Conflicting directives")));
+        });
+
+        void it("Respects conflictingDirectives option to disable warnings", () => {
+            const csp: ContentSecurityPolicy = {
+                [Directive.SCRIPT_SRC]: ["'none'", "self"],
+            };
+            const opts: WarningOptions = {conflictingDirectives: false};
+            warnOnCspIssues(csp, opts);
+            assert(!warnings.some((w) => w.includes("Conflicting directives")));
+        });
+    });
 });

@@ -75,7 +75,7 @@ void describe("Utils tests", () => {
             const cspString = create(csp);
             assert.strictEqual(
                 cspString,
-                "default-src 'self'; script-src 'self' js.example.com; style-src 'self' css.example.com; img-src 'self' *.google.com *.google.com.au; connect-src 'self'; font-src 'self' font.example.com; object-src 'none'; media-src 'self' media.example.com; frame-src 'self'; sandbox allow-scripts; report-uri /my-report-uri; child-src 'self'; form-action 'self'; frame-ancestors 'none'; plugin-types application/pdf; base-uri 'self'; report-to myGroupName; worker-src 'none'; manifest-src 'none'; prefetch-src 'none'; navigate-to example.com; require-trusted-types-for 'script'; trusted-types 'none'; upgrade-insecure-requests; block-all-mixed-content; script-src-elem 'self' scripts.example.com; script-src-attr 'none'; style-src-elem 'self' styles.example.com; style-src-attr 'self'; webrtc 'allow'; fenced-frame-src 'self';",
+                "base-uri 'self'; block-all-mixed-content; child-src 'self'; connect-src 'self'; default-src 'self'; fenced-frame-src 'self'; font-src 'self' font.example.com; form-action 'self'; frame-ancestors 'none'; frame-src 'self'; img-src 'self' *.google.com *.google.com.au; manifest-src 'none'; media-src 'self' media.example.com; navigate-to example.com; object-src 'none'; plugin-types application/pdf; prefetch-src 'none'; report-to myGroupName; report-uri /my-report-uri; require-trusted-types-for 'script'; sandbox allow-scripts; script-src 'self' js.example.com; script-src-attr 'none'; script-src-elem 'self' scripts.example.com; style-src 'self' css.example.com; style-src-attr 'self'; style-src-elem 'self' styles.example.com; trusted-types 'none'; upgrade-insecure-requests; webrtc 'allow'; worker-src 'none';",
             );
         });
 
@@ -175,7 +175,7 @@ void describe("Utils tests", () => {
             const cspString = create(csp);
             assert.strictEqual(
                 cspString,
-                "script-src-elem 'self' scripts.example.com; script-src-attr 'none'; style-src-elem 'self' 'wasm-unsafe-eval' 'trusted-types-eval'; style-src-attr 'unsafe-inline' 'report-sample'; webrtc 'block'; script-src 'inline-speculation-rules' 'unsafe-allow-redirects' 'report-sha256' 'report-sha384' 'report-sha512' 'unsafe-webtransport-hashes';",
+                "script-src 'inline-speculation-rules' 'report-sha256' 'report-sha384' 'report-sha512' 'unsafe-allow-redirects' 'unsafe-webtransport-hashes'; script-src-attr 'none'; script-src-elem 'self' scripts.example.com; style-src-attr 'report-sample' 'unsafe-inline'; style-src-elem 'self' 'trusted-types-eval' 'wasm-unsafe-eval'; webrtc 'block';",
             );
         });
 
@@ -206,6 +206,106 @@ void describe("Utils tests", () => {
             assert(
                 deprecationWarnings.some((w: string) =>
                     w.includes("block-all-mixed-content"),
+                ),
+            );
+        });
+
+        void it("Throws an error on CSP injection attempts and invalid control characters", () => {
+            const csp1: ContentSecurityPolicy = {
+                [Directive.SCRIPT_SRC]: [
+                    "self",
+                    "example.com; object-src 'none'",
+                ],
+            };
+            assert.throws(() => create(csp1), /Invalid character in rule/);
+
+            const csp2: ContentSecurityPolicy = {
+                [Directive.SCRIPT_SRC]: ["self", "example.com, example.org"],
+            };
+            assert.throws(() => create(csp2), /Invalid character in rule/);
+
+            const csp3: ContentSecurityPolicy = {
+                [Directive.IMG_SRC]: [
+                    {"*.example": [".com; script-src 'unsafe-inline'"]},
+                ],
+            };
+            assert.throws(() => create(csp3), /Invalid character in rule/);
+
+            const csp4: ContentSecurityPolicy = {
+                [Directive.SCRIPT_SRC]: [
+                    "self",
+                    "example.com\nobject-src 'none'",
+                ],
+            };
+            assert.throws(() => create(csp4), /Invalid character in rule/);
+
+            const csp5: ContentSecurityPolicy = {
+                [Directive.SCRIPT_SRC]: ["self", "example.com\u0000"],
+            };
+            assert.throws(() => create(csp5), /Invalid character in rule/);
+        });
+
+        void it("Validates nonces and drops invalid ones", () => {
+            const csp: ContentSecurityPolicy = {
+                [Directive.SCRIPT_SRC]: [
+                    "'nonce-validBase64=='",
+                    "'nonce-invalid!@#'",
+                    "nonce-missingQuotes",
+                ],
+            };
+            const cspString = create(csp);
+
+            assert.strictEqual(cspString, "script-src 'nonce-validBase64==';");
+
+            const warnings = mockWarn.mock.calls.map(
+                (call) => call.arguments[0] as string,
+            );
+            assert(
+                warnings.some((w) =>
+                    w.includes("Invalid nonce format: 'nonce-invalid!@#'"),
+                ),
+            );
+            assert(
+                warnings.some((w) =>
+                    w.includes("Invalid nonce format: nonce-missingQuotes"),
+                ),
+            );
+        });
+
+        void it("Validates hashes and drops invalid ones", () => {
+            const csp: ContentSecurityPolicy = {
+                [Directive.SCRIPT_SRC]: [
+                    "'sha256-validBase64=='",
+                    "'sha384-validBase64=='",
+                    "'sha512-validBase64=='",
+                    "'sha256-invalid!@#'",
+                    "sha256-missingQuotes",
+                    "'sha128-unsupported'",
+                ],
+            };
+            const cspString = create(csp);
+
+            assert.strictEqual(
+                cspString,
+                "script-src 'sha256-validBase64==' 'sha384-validBase64==' 'sha512-validBase64==';",
+            );
+
+            const warnings = mockWarn.mock.calls.map(
+                (call) => call.arguments[0] as string,
+            );
+            assert(
+                warnings.some((w) =>
+                    w.includes("Invalid hash format: 'sha256-invalid!@#'"),
+                ),
+            );
+            assert(
+                warnings.some((w) =>
+                    w.includes("Invalid hash format: sha256-missingQuotes"),
+                ),
+            );
+            assert(
+                warnings.some((w) =>
+                    w.includes("Invalid hash format: 'sha128-unsupported'"),
                 ),
             );
         });

@@ -11,6 +11,14 @@ import {
     BasicDirectiveRule,
 } from "./types";
 
+const NONCE_REGEX = /^'nonce-[a-zA-Z0-9+/_-]+={0,2}'$/;
+const HASH_REGEX = /^'(sha256|sha384|sha512)-[a-zA-Z0-9+/_-]+={0,2}'$/;
+const NONCE_PREFIXES = ["'nonce-", "nonce-"];
+const HASH_PREFIXES = ["'sha", "sha256-", "sha384-", "sha512-"];
+const INVALID_RULE_CHAR_REGEX = /[;,\r\n]|[\u0000-\u001F\u007F]/;
+const hasInvalidRuleChars = (rule: string): boolean =>
+    INVALID_RULE_CHAR_REGEX.test(rule);
+
 export const processRules = (rules: BasicDirectiveRule): string => {
     // Flatten and deduplicate rules
     const seen = new Set<string>();
@@ -18,14 +26,53 @@ export const processRules = (rules: BasicDirectiveRule): string => {
         if (typeof rule === "object") {
             for (const [domain, tlds] of Object.entries(rule)) {
                 for (const tld of tlds) {
-                    seen.add(`${domain}${tld}`);
+                    const combined = `${domain}${tld}`;
+                    if (hasInvalidRuleChars(combined)) {
+                        throw new Error(
+                            `[CSPrefabricate] Invalid character in rule: ${combined}`,
+                        );
+                    }
+                    seen.add(combined);
                 }
             }
         } else {
-            seen.add(formatRule(rule));
+            const formatted = formatRule(rule);
+            if (hasInvalidRuleChars(formatted)) {
+                throw new Error(
+                    `[CSPrefabricate] Invalid character in rule: ${formatted}`,
+                );
+            }
+
+            // Validate nonces and hashes
+            const isNonce = NONCE_PREFIXES.some((prefix) =>
+                formatted.startsWith(prefix),
+            );
+            const isHash = HASH_PREFIXES.some((prefix) =>
+                formatted.startsWith(prefix),
+            );
+
+            if (isNonce || isHash) {
+                if (isNonce) {
+                    if (!NONCE_REGEX.test(formatted)) {
+                        console.warn(
+                            `[CSPrefabricate] Invalid nonce format: ${formatted}. Rule dropped.`,
+                        );
+                        continue;
+                    }
+                } else {
+                    if (!HASH_REGEX.test(formatted)) {
+                        console.warn(
+                            `[CSPrefabricate] Invalid hash format: ${formatted}. Rule dropped.`,
+                        );
+                        continue;
+                    }
+                }
+            }
+
+            seen.add(formatted);
         }
     }
-    return Array.from(seen).join(" ");
+    return Array.from(seen).sort().join(" ");
 };
 
 /**
@@ -39,7 +86,9 @@ export const create = (
     warningOptions?: WarningOptions,
 ): string => {
     warnOnCspIssues(obj, warningOptions);
-    const entries = Object.entries(obj) as [Directive, Rules][];
+    const entries = (Object.entries(obj) as [Directive, Rules][]).sort(
+        ([a], [b]) => a.localeCompare(b),
+    );
     const cspString = entries
         .filter(([directive, _rules]) => {
             const isValid = isValidDirective(directive);
