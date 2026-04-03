@@ -1,5 +1,16 @@
 # Changelog
 
+## [3.0.0](https://github.com/JamesToohey/csprefabricate/compare/v2.1.1...v3.0.0) (2026-04-03)
+
+
+### ⚠ BREAKING CHANGES
+
+* General API Improvements ([#74](https://github.com/JamesToohey/csprefabricate/issues/74))
+
+### Features
+
+* General API Improvements ([#74](https://github.com/JamesToohey/csprefabricate/issues/74)) ([6ef4d20](https://github.com/JamesToohey/csprefabricate/commit/6ef4d20c8a3a8763abdfef6706e2060f748bfef8))
+
 ## [2.1.1](https://github.com/JamesToohey/csprefabricate/compare/v2.1.0...v2.1.1) (2026-02-21)
 
 
